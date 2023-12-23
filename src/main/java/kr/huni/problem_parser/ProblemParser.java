@@ -26,8 +26,7 @@ public class ProblemParser {
         문제 정보 파싱완료
              제목 : %s
         %n""", title);
-    this.problem = new Problem(number, title);
-    this.parseTestCase();
+    this.problem = new Problem(number, title, parseTestCases());
   }
 
   /**
@@ -50,7 +49,7 @@ public class ProblemParser {
     return doc;
   }
 
-  private void parseTestCase() {
+  private ArrayList<TestCase> parseTestCases() {
     final ArrayList<TestCase> testCases = new ArrayList<>();
 
     Elements inputs = this.document.select("pre[id^=sample-input]");
@@ -60,7 +59,7 @@ public class ProblemParser {
       testCases.add(new TestCase(inputs.get(i).text(), outputs.get(i).text()));
     }
 
-    this.problem.setTestCases(testCases);
+    return testCases;
   }
 
 }
