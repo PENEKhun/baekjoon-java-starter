@@ -37,7 +37,7 @@ public class ProblemParser {
    *
    * @param number : 백준 문제번호
    * @return jsoup document
-   * @throws IllegalAccessException 존재하지 않은 문제 번호
+   * @throws IllegalArgumentException 존재하지 않은 문제 번호
    */
   private Document validProblem(int number) throws IllegalArgumentException {
     Document doc = null;
