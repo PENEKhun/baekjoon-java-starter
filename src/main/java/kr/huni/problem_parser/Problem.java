@@ -1,28 +1,21 @@
 package kr.huni.problem_parser;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
-import lombok.Setter;
 
+@Getter
 public class Problem {
 
-  @Getter
   private final int number;
-  @Getter
   private final String title;
-  @Getter
   private final String directory;
-  @Setter
-  private ArrayList<TestCase> testCases = new ArrayList<>();
+  private final List<TestCase> testCases;
 
-  public Problem(int number, String title) {
+  public Problem(int number, String title, List<TestCase> testCases) {
     this.number = number;
     this.title = title;
     this.directory = "./p" + number;
+    this.testCases = testCases;
   }
 
-  public List<TestCase> getTestCases() {
-    return testCases;
-  }
 }
