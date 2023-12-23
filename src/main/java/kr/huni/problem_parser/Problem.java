@@ -1,12 +1,19 @@
 package kr.huni.problem_parser;
 
 import java.util.ArrayList;
+import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Problem {
 
+  @Getter
   private final int number;
+  @Getter
   private final String title;
-  private String directory;
+  @Getter
+  private final String directory;
+  @Setter
   private ArrayList<TestCase> testCases = new ArrayList<>();
 
   public Problem(int number, String title) {
@@ -15,23 +22,7 @@ public class Problem {
     this.directory = "./p" + number;
   }
 
-  public int getNumber() {
-    return number;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public String getDirectory() {
-    return directory;
-  }
-
-  public void setTestCases(ArrayList<TestCase> testCases) {
-    this.testCases = testCases;
-  }
-
-  public ArrayList<TestCase> getTestCases() {
+  public List<TestCase> getTestCases() {
     return testCases;
   }
 }

@@ -2,32 +2,30 @@ package kr.huni.problem_parser;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
+import lombok.Getter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 public class ProblemParser {
 
-  private final Logger logger = Logger.getLogger(getClass().getName());
-
   private static final String BOJ_URL = "https://www.acmicpc.net/problem/";
   private static final String USER_AGENT =
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
           + "(KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
 
-  private Problem problem;
-  private Document document;
+  @Getter
+  private final Problem problem;
+  private final Document document;
 
   public ProblemParser(int number) throws IllegalArgumentException {
     this.document = validProblem(number);
 
     String title = this.document.select("span#problem_title").text();
-    logger.info("""
+    System.out.printf("""
         문제 정보 파싱완료
              제목 : %s
-        """.formatted(title)
-    );
+        %n""", title);
     this.problem = new Problem(number, title);
     this.parseTestCase();
   }
@@ -65,7 +63,4 @@ public class ProblemParser {
     this.problem.setTestCases(testCases);
   }
 
-  public Problem getProblem() {
-    return this.problem;
-  }
 }
