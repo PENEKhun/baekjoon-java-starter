@@ -69,14 +69,14 @@ public class SourceCodeTemplate {
       code.append("""
           new TestCase(
           // input
-          \"\"\"
+          \"""
           %s
-          \"\"\",
+          \""",
           // output
-          \"\"\"
+          \"""
           %s
-          \"\"\"),
-            """.formatted(testCase.getInput(), testCase.getOutput()));
+          \"""),
+            """.formatted(testCase.input(), testCase.output()));
     }
 
     code.append("""
