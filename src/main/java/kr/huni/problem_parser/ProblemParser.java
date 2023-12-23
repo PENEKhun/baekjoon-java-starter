@@ -25,7 +25,7 @@ public class ProblemParser {
   /**
    * 백준 문제 파싱을 위한 클래스입니다. 문제번호를 입력받아 문제를 파싱합니다.
    *
-   * @param number : 백준 문제번호
+   * @param number 백준 문제번호
    * @throws IllegalArgumentException 존재하지 않은 문제 번호
    */
   public ProblemParser(int number) throws IllegalArgumentException {
@@ -42,7 +42,7 @@ public class ProblemParser {
   /**
    * 문제번호가 유효한지 확인합니다.
    *
-   * @param number : 백준 문제번호
+   * @param number 백준 문제번호
    * @return jsoup document
    * @throws IllegalArgumentException 존재하지 않은 문제 번호
    */
