@@ -1,6 +1,6 @@
 package kr.huni.code_generator;
 
-import java.util.ArrayList;
+import java.util.List;
 import kr.huni.problem_parser.TestCase;
 
 public class SourceCodeTemplate {
@@ -23,7 +23,7 @@ public class SourceCodeTemplate {
         """, number, title, number);
   }
 
-  public static String getTestCode(ArrayList<TestCase> testCases) {
+  public static String getTestCode(List<TestCase> testCases) {
     if (testCases.isEmpty()) {
       return """    
           public class TestHelper {
@@ -60,7 +60,7 @@ public class SourceCodeTemplate {
 
     code.append("""
               
-        public static void main (String[] args){
+        public static void main(String[] args){
                   
           TestCase[] testCases = new TestCase[]{
           """);
