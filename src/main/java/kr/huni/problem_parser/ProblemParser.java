@@ -18,6 +18,12 @@ public class ProblemParser {
   private final Problem problem;
   private final Document document;
 
+  /**
+   * 백준 문제 파싱을 위한 클래스입니다. 문제번호를 입력받아 문제를 파싱합니다.
+   *
+   * @param number : 백준 문제번호
+   * @throws IllegalArgumentException 존재하지 않은 문제 번호
+   */
   public ProblemParser(int number) throws IllegalArgumentException {
     this.document = validProblem(number);
 
