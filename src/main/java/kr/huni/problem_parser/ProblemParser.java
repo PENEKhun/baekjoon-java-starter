@@ -14,6 +14,10 @@ public class ProblemParser {
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
           + "(KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
 
+  private static final String PROBLEM_TITLE_SELECTOR = "span#problem_title";
+  private static final String SAMPLE_INPUT_SELECTOR = "pre[id^=sample-input]";
+  private static final String SAMPLE_OUTPUT_SELECTOR = "pre[id^=sample-output]";
+
   @Getter
   private final Problem problem;
   private final Document document;
@@ -27,7 +31,7 @@ public class ProblemParser {
   public ProblemParser(int number) throws IllegalArgumentException {
     this.document = validProblem(number);
 
-    String title = this.document.select("span#problem_title").text();
+    String title = this.document.select(PROBLEM_TITLE_SELECTOR).text();
     System.out.printf("""
         문제 정보 파싱완료
              제목 : %s
@@ -58,8 +62,8 @@ public class ProblemParser {
   private ArrayList<TestCase> parseTestCases() {
     final ArrayList<TestCase> testCases = new ArrayList<>();
 
-    Elements inputs = this.document.select("pre[id^=sample-input]");
-    Elements outputs = this.document.select("pre[id^=sample-output]");
+    Elements inputs = this.document.select(SAMPLE_INPUT_SELECTOR);
+    Elements outputs = this.document.select(SAMPLE_OUTPUT_SELECTOR);
 
     for (int i = 0; i < inputs.size(); i++) {
       testCases.add(new TestCase(inputs.get(i).text(), outputs.get(i).text()));
