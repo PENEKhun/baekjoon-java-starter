@@ -59,7 +59,6 @@ public class SourceCodeTemplate {
         """);
 
     code.append("""
-              
         public static void main(String[] args){
                   
           TestCase[] testCases = new TestCase[]{
@@ -93,7 +92,14 @@ public class SourceCodeTemplate {
               System.setOut(printStream);
               System.setIn(new ByteArrayInputStream(testCase.input.getBytes()));
               
-              Main.main(new String[0]);
+              try {
+                Main.main(new String[0]);
+              } catch (Exception e) {
+                System.out.println("NG");
+                System.out.println("실행 중 에러가 발생했습니다.");
+                System.out.println(e.getMessage());
+                continue;
+              }
 
               String output = outputStream.toString();
               System.setOut(printOut);
