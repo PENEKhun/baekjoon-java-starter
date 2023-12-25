@@ -1,4 +1,4 @@
-package Integration;
+package kr.huni.Integration;
 
 import kr.huni.problem_parser.ProblemParser;
 import org.junit.jupiter.api.Assertions;
