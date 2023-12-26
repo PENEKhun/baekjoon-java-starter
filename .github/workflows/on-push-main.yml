@@ -45,11 +45,12 @@ jobs:
           prerelease: false
 
       - name: Upload ZIP to release
-        uses: actions/upload-release-asset@v1
+        id: upload_release_asset
+        uses: sekwah41/upload-release-assets@v1
         env:
           GITHUB_TOKEN: ${{ secrets.PENEKHUN_GITHUB_SECRET }}
         with:
-          upload_url: ${{ needs.build.outputs.upload_url }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: Baekjoon-java-starter.zip
           asset_name: Baekjoon-java-starter.zip
           asset_content_type: application/zip
