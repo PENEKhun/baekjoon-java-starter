@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'kr.huni'
-version = '1.0.0-alpha'
+version = ''
 
 repositories {
     mavenCentral()
@@ -16,6 +16,8 @@ dependencies {
 
     testImplementation platform('org.junit:junit-bom:5.9.2')
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'
+    testImplementation 'org.jsoup:jsoup:1.17.1'
 }
 
 test {
