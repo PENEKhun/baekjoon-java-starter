@@ -28,10 +28,14 @@
 
 ### 인텔리제이
 
-## 설치 및 사용
+## 설치 및 사용 방법
 
-...
+1. [최신 릴리즈](https://github.com/PENEKhun/Baekjoon-java-starter/releases/latest)
+   에서 `Baekjoon-java-starter.zip` 파일을 다운로드합니다.
+2. 압축을 풀고 다음 명령어를 실행합니다.
 
-<!-- 다운로드 방법 -->
+    ```bash
+    java -jar Baekjoon-java-starter.jar
+    ```
 
-<!-- 사용 방법 -->
+3. 이제 백준 문제 번호를 입력하면 됩니다.
