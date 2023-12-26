@@ -3,6 +3,7 @@ package kr.huni;
 import java.io.IOException;
 import java.util.Scanner;
 import kr.huni.code.generator.CodeGenerator;
+import kr.huni.code.runner.IntellijRunManager;
 import kr.huni.problem_parser.ProblemParser;
 
 public class Main {
@@ -15,7 +16,8 @@ public class Main {
 
     CodeGenerator generator = new CodeGenerator(parser.getProblem());
     generator.generate();
-    generator.runIdea();
+    IntellijRunManager runManager = new IntellijRunManager();
+    runManager.run(parser.getProblem().getDirectory());
 
     scanner.close();
   }
