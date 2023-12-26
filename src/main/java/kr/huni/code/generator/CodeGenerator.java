@@ -1,4 +1,4 @@
-package kr.huni.code_generator;
+package kr.huni.code.generator;
 
 import java.io.IOException;
 import java.util.logging.Logger;

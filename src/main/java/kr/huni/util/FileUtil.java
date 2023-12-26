@@ -11,16 +11,16 @@ public class FileUtil {
   private File srcDir;
 
   public void write(String sourceCode, String testCode) throws IOException {
-    File src = new File(srcDir, "Main.java");
-    FileWriter fileWriter = new FileWriter(src);
-    fileWriter.write(sourceCode);
+    writeToFile(srcDir, "Main.java", sourceCode);
+    writeToFile(srcDir, "TestHelper.java", testCode);
+  }
 
-    File testSrc = new File(srcDir, "TestHelper.java");
-    FileWriter testFileWriter = new FileWriter(testSrc);
-    testFileWriter.write(testCode);
+  private void writeToFile(File directory, String fileName, String code) throws IOException {
+    File file = new File(directory, fileName);
 
-    fileWriter.close();
-    testFileWriter.close();
+    try (FileWriter fileWriter = new FileWriter(file)) {
+      fileWriter.write(code);
+    }
   }
 
   public void createDirectory(String directory) throws IOException {
