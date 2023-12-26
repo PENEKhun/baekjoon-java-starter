@@ -24,9 +24,4 @@ public class CodeGenerator {
     fileUtil.write(codeTemplate, testCodeTemplate);
     logger.info("소스코드 생성 완료");
   }
-
-  public void runIdea() throws IOException {
-    String command = "idea " + this.problem.getDirectory();
-    Runtime.getRuntime().exec(command);
-  }
 }
