@@ -1,4 +1,4 @@
-package kr.huni.code_generator;
+package kr.huni.code.generator;
 
 import java.util.List;
 import kr.huni.problem_parser.TestCase;

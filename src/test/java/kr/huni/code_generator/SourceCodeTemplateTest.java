@@ -3,6 +3,7 @@ package kr.huni.code_generator;
 import java.io.IOException;
 import java.util.ArrayList;
 import kr.huni.DynamicCodeCompileSupporter;
+import kr.huni.code.generator.SourceCodeTemplate;
 import kr.huni.problem_parser.TestCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

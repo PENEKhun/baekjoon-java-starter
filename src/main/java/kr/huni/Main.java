@@ -2,7 +2,7 @@ package kr.huni;
 
 import java.io.IOException;
 import java.util.Scanner;
-import kr.huni.code_generator.CodeGenerator;
+import kr.huni.code.generator.CodeGenerator;
 import kr.huni.problem_parser.ProblemParser;
 
 public class Main {
