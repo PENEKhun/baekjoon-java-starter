@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  test-build-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -25,14 +25,11 @@ jobs:
         run: ./gradlew clean build
 
       - name: Zip JAR file
-        run: zip -r $GITHUB_WORKSPACE/build/libs/Baekjoon-java-starter.zip build/libs/*.jar
+        run: zip -r Baekjoon-java-starter.zip build/libs/*.jar
 
-  deploy-on-github:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - run: echo "##[set-output name=version;]$(echo '${{ github.event.head_commit.message }}' | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')"
         id: extract_version_name
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -51,6 +48,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PENEKHUN_GITHUB_SECRET }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: $GITHUB_WORKSPACE/build/libs/Baekjoon-java-starter.zip
+          asset_path: ./Baekjoon-java-starter.zip
           asset_name: Baekjoon-java-starter.zip
           asset_content_type: application/zip
