@@ -27,9 +27,8 @@
 
 ## 설치 및 사용 방법
 
-1. [최신 릴리즈](https://github.com/PENEKhun/Baekjoon-java-starter/releases/latest)
-   에서 `Baekjoon-java-starter.zip` 파일을 다운로드합니다.
-2. 압축을 풀고 다음 명령어를 실행합니다.
+1. [최신 릴리즈] 에서 `Baekjoon-java-starter.zip` 파일을 다운로드합니다.
+2. **압축을 풀고,** 다음 명령어를 실행합니다.
 
     ```bash
     java -jar Baekjoon-java-starter.jar
@@ -37,6 +36,22 @@
 
 3. 이제 백준 문제 번호를 입력하면 됩니다.
 
+활용 방안 등 자세한 내용은 [사용 가이드]를 참고해주세요.
+
+[사용 가이드]: documentation/DOCUMENTATION.md
+
+[최신 릴리즈]: https://github.com/PENEKhun/Baekjoon-java-starter/releases/latest
+
+## 기여하기
+
+해당 프로젝트에 올라오는 이슈와 풀 리퀘스트는 언제나 환영합니다.  
+자세한건 [기여 가이드라인]을 참고해주세요.  
+미리 감사드립니다.
+
+[기여 가이드라인]: documentation/CONTRIBUTING.md
+
 ## 라이센스
+
+해당 프로젝트는 MIT 라이센스를 따릅니다.
 
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
