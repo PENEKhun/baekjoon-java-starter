@@ -25,7 +25,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: Zip JAR file
-        run: zip -r Baekjoon-java-starter.zip build/libs/*.jar
+        run: zip -r build/libs/Baekjoon-java-starter.zip build/libs/*.jar
 
   deploy-on-github:
     runs-on: ubuntu-latest
@@ -51,6 +51,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PENEKHUN_GITHUB_SECRET }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./Baekjoon-java-starter.zip
+          asset_path: ./build/libs/Baekjoon-java-starter.zip
           asset_name: Baekjoon-java-starter.zip
           asset_content_type: application/zip
