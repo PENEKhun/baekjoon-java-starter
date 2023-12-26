@@ -3,10 +3,10 @@
 해당 프로젝트는 자바를 이용하여 백준 문제를 풀때, 프로젝트 생성 및 테스트 케이스 자동 생성을 지원합니다.  
 **"여러분은 단지 문제 풀이에만 집중하면 됩니다."**
 
-![매번 귀찮게 프로젝트를 만들지 마세요](https://github.com/PENEKhun/Baekjoon-java-starter/assets/13290706/453dcb0d-fd04-4554-a7b0-f9c6e253da13)
-![그냥 번호를 입력하세요](https://github.com/PENEKhun/Baekjoon-java-starter/assets/13290706/d8df290f-96ac-459e-a416-9a37b95d21ce)
-![매번 귀찮게 복붙하지 마세요](https://github.com/PENEKhun/Baekjoon-java-starter/assets/13290706/832bfd6f-4be9-4e8e-a394-66985c1542dc)
-![그냥 실행만 하세요](https://github.com/PENEKhun/Baekjoon-java-starter/assets/13290706/98e5dd93-d327-48d0-b83f-5abddebd67e9)
+![매번 귀찮게 프로젝트를 만들지 마세요](documentation/assets/1.png)
+![그냥 번호를 입력하세요](documentation/assets/2.png)
+![매번 귀찮게 복붙하지 마세요](documentation/assets/3.png)
+![그냥 실행만 하세요](documentation/assets/4.png)
 
 ## 어떻게 작동하나요?
 
@@ -39,3 +39,5 @@
     ```
 
 3. 이제 백준 문제 번호를 입력하면 됩니다.
+
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
