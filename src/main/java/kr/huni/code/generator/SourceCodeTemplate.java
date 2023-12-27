@@ -129,7 +129,7 @@ public class SourceCodeTemplate {
                   %s
                   [기대 값]
                   %s%n
-                  ""\", red(caseNumber + " 번째 케이스 실패 "), caseNumber, testCase.input, testCase.expectedOutput);
+                  ""\", red(caseNumber + " 번째 케이스 실패 "), testCase.input, testCase.expectedOutput);
               
               System.out.println(message);
             }
