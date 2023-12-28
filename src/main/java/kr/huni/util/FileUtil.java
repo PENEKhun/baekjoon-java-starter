@@ -3,11 +3,11 @@ package kr.huni.util;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class FileUtil {
 
-  private final Logger logger = Logger.getLogger(getClass().getName());
   private File srcDir;
 
   public void write(String sourceCode, String testCode) throws IOException {
@@ -29,7 +29,7 @@ public class FileUtil {
     if (!this.srcDir.exists()) {
       boolean success = srcDir.mkdirs();
       if (success) {
-        logger.info("소스코드 디렉토리 생성 완료");
+        log.info("소스코드 디렉토리 생성 완료");
       } else {
         throw new IOException("소스코드 디렉터리 생성 실패");
       }
