@@ -1,9 +1,6 @@
 import java.util.Scanner;
 
-/*
-    BAEKJOON {{number}} {{title}}
-    https://www.acmicpc.net/problem/{{number}}
-*/
+// {{srcCommentFormat}}
 
 public class Main {
 

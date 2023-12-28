@@ -93,15 +93,13 @@ class SourceCodeTemplateTests {
   void main_replace_text_exist() throws IOException {
     // given
     String codePath = SourceCodeTemplate.MAIN_JAVA_FILE;
-    String replacedNumberSymbol = SourceCodeTemplate.REPLACED_NUMBER;
-    String replacedTitleSymbol = SourceCodeTemplate.REPLACED_TITLE;
+    String replacedSourceCommentFormat = SourceCodeTemplate.REPLACE_SOURCE_COMMENT_FORMAT;
 
     // when
     String sourceCode = SourceCodeTemplate.readFile(codePath);
 
     // then
-    Assertions.assertTrue(sourceCode.contains(replacedNumberSymbol));
-    Assertions.assertTrue(sourceCode.contains(replacedTitleSymbol));
+    Assertions.assertTrue(sourceCode.contains(replacedSourceCommentFormat));
   }
 
   @Test

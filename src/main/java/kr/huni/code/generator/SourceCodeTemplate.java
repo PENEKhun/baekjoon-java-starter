@@ -7,12 +7,14 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Objects;
 import kr.huni.problem_parser.TestCase;
+import kr.huni.user_configuration.UserConfigurationLoader;
 
 public class SourceCodeTemplate {
 
   public static final String MAIN_JAVA_FILE = "code_sample/Main.java";
   public static final String TEST_JAVA_FILE = "code_sample/TestHelper.java";
   public static final String NO_TEST_JAVA_FILE = "code_sample/NoTestHelper.java";
+  public static final String REPLACE_SOURCE_COMMENT_FORMAT = "// {{srcCommentFormat}}";
   public static final String REPLACED_NUMBER = "{{number}}";
   public static final String REPLACED_TITLE = "{{title}}";
   public static final String REPLACED_TEST_CASES = "// {{test_case}}";
@@ -36,7 +38,9 @@ public class SourceCodeTemplate {
 
   public static String getMainCode(int number, String title) throws IOException {
     String template = readFile(MAIN_JAVA_FILE);
-    return template.replace(REPLACED_NUMBER, String.valueOf(number))
+    return template.replace(REPLACE_SOURCE_COMMENT_FORMAT,
+            UserConfigurationLoader.getInstance().srcCommentFormat.getValue())
+        .replace(REPLACED_NUMBER, String.valueOf(number))
         .replace(REPLACED_TITLE, title);
   }
 
