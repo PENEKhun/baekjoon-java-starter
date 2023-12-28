@@ -34,7 +34,7 @@ public class ProblemParser {
     this.document = validProblem(number);
 
     String title = this.document.select(PROBLEM_TITLE_SELECTOR).text();
-    log.info("[문제 정보 파싱완료]문제 제목 : {}", title);
+    log.info("[문제 정보 파싱완료] 문제 제목 : {}", title);
     this.problem = new Problem(number, title, parseTestCases());
   }
 
