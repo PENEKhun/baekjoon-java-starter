@@ -20,10 +20,6 @@ public class TestHelper {
     for (int i = 0; i < testCases.length; i++) {
       TestCase testCase = testCases[i];
 
-      System.out.println("========================================");
-      System.out.println("입력 값: " + testCase.input);
-      System.out.println("기대 값: " + testCase.expectedOutput);
-
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       PrintStream printStream = new PrintStream(outputStream);
       PrintStream printOut = System.out;
