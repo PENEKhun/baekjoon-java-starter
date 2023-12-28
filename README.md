@@ -36,7 +36,12 @@
 
 3. 이제 백준 문제 번호를 입력하면 됩니다.
 
-활용 방안 등 자세한 내용은 [사용 가이드]를 참고해주세요.
+만일 기본으로 생성되는 `Main.java`의 템플릿이 마음에 들지 않는다면, [코드 템플릿 변경하기]을 참고해주세요.  
+**그 외 자세한 내용은 [사용 가이드]를 참고해주세요.**
+
+[코드 템플릿 변경하기]: documentation/DOCUMENTATION.md#생성되는-mainjava-파일의-템플릿-변경하기
+
+[사용 가이드]: documentation/DOCUMENTATION.md
 
 [사용 가이드]: documentation/DOCUMENTATION.md
 
