@@ -68,4 +68,24 @@ class SourceCodeTemplateTest {
     Assertions.assertTrue(working);
   }
 
+  @Test
+  @DisplayName("테스트 케이스가 없을 때 NoTestHelper.java 내용이 잘 로드된다.")
+  void noTestHelper_load_well() throws IOException {
+    // given
+    String noTestHelperCode = SourceCodeTemplate.getTestCode(new ArrayList<>());
+
+    // when & then
+    Assertions.assertEquals(
+        """
+            public class TestHelper {
+                        
+              public static void main() {
+                System.out.println("해당 문제는 테스트 케이스가 없습니다.");
+              }
+            }
+            """,
+        noTestHelperCode
+    );
+  }
+
 }
