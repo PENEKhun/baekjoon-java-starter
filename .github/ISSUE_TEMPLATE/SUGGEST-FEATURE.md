@@ -1,3 +1,11 @@
+---
+name: 기능 제안
+about: 해당 템플릿을 통해 새로운 기능을 제안해주세요.
+title: "[기능 제안] "
+labels: "\U0001F4A1 Feature"
+assignees: ''
+---
+
 # 새로운 기능 제안
 
 <!-- 
