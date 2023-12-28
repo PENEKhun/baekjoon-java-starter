@@ -1,6 +1,8 @@
 package kr.huni.problem_parser;
 
 import java.util.List;
+import kr.huni.user_configuration.UserConfiguration;
+import kr.huni.user_configuration.UserConfigurationLoader;
 import lombok.Getter;
 
 @Getter
@@ -12,9 +14,11 @@ public class Problem {
   private final List<TestCase> testCases;
 
   public Problem(int number, String title, List<TestCase> testCases) {
+    UserConfiguration configuration = UserConfigurationLoader.getInstance();
+
     this.number = number;
     this.title = title;
-    this.directory = "./p" + number;
+    this.directory = configuration.srcDirPrefix.getValue() + number;
     this.testCases = testCases;
   }
 
