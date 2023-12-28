@@ -40,3 +40,4 @@ bin/
 
 ### Exclude Test Output ###
 ./p*/
+config.json

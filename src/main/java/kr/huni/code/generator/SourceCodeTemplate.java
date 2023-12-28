@@ -7,17 +7,33 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Objects;
 import kr.huni.problem_parser.TestCase;
+import kr.huni.user_configuration.UserConfigurationLoader;
 
 public class SourceCodeTemplate {
 
-  public static final String MAIN_JAVA_FILE = "code_sample/Main.java";
   public static final String TEST_JAVA_FILE = "code_sample/TestHelper.java";
   public static final String NO_TEST_JAVA_FILE = "code_sample/NoTestHelper.java";
   public static final String REPLACED_NUMBER = "{{number}}";
   public static final String REPLACED_TITLE = "{{title}}";
   public static final String REPLACED_TEST_CASES = "// {{test_case}}";
+  public static final String DEFAULT_MAIN_CODE_TEMPLATE = """
+      import java.util.Scanner;
+            
+      /*
+          BAEKJOON {{number}} {{title}}
+          https://www.acmicpc.net/problem/{{number}}
+      */
+            
+      public class Main {
+            
+        public static void main(String[] args) {
+          Scanner scanner = new Scanner(System.in);
+          // 코드를 작성하세요.
+        }
+      }
+      """;
 
-  private static String readFile(String filePath) throws IOException {
+  public static String readFile(String filePath) throws IOException {
     StringBuilder sourceCode = new StringBuilder();
     try (InputStream inputStream = SourceCodeTemplate.class.getClassLoader()
         .getResourceAsStream(filePath);
@@ -34,9 +50,15 @@ public class SourceCodeTemplate {
     return sourceCode.toString();
   }
 
-  public static String getMainCode(int number, String title) throws IOException {
-    String template = readFile(MAIN_JAVA_FILE);
-    return template.replace(REPLACED_NUMBER, String.valueOf(number))
+  public static String getMainCode(int number, String title, boolean useCustomTemplate)
+      throws IOException {
+    String template = DEFAULT_MAIN_CODE_TEMPLATE;
+    if (useCustomTemplate) {
+      template = UserConfigurationLoader.getInstance().mainCodeTemplate.getValue();
+    }
+
+    return template
+        .replace(REPLACED_NUMBER, String.valueOf(number))
         .replace(REPLACED_TITLE, title);
   }
 
