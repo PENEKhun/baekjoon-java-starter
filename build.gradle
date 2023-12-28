@@ -22,7 +22,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-simple:1.7.32'
 
     // JSON 파싱
-    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.1'
 
     // 테스팅
     testImplementation platform('org.junit:junit-bom:5.9.2')
