@@ -88,4 +88,34 @@ class SourceCodeTemplateTest {
     );
   }
 
+  @Test
+  @DisplayName("Main.java 코드 템플릿에 치환 문자가 존재 한다.")
+  void main_replace_text_exist() throws IOException {
+    // given
+    String codePath = SourceCodeTemplate.MAIN_JAVA_FILE;
+    String replacedNumberSymbol = SourceCodeTemplate.REPLACED_NUMBER;
+    String replacedTitleSymbol = SourceCodeTemplate.REPLACED_TITLE;
+
+    // when
+    String sourceCode = SourceCodeTemplate.readFile(codePath);
+
+    // then
+    Assertions.assertTrue(sourceCode.contains(replacedNumberSymbol));
+    Assertions.assertTrue(sourceCode.contains(replacedTitleSymbol));
+  }
+
+  @Test
+  @DisplayName("TestHelper.java 코드 템플릿에 치환 문자가 존재 한다.")
+  void test_replace_text_exist() throws IOException {
+    // given
+    String codePath = SourceCodeTemplate.TEST_JAVA_FILE;
+    String replacedTestCaseSymbol = SourceCodeTemplate.REPLACED_TEST_CASES;
+
+    // when
+    String sourceCode = SourceCodeTemplate.readFile(codePath);
+
+    // then
+    Assertions.assertTrue(sourceCode.contains(replacedTestCaseSymbol));
+  }
+
 }

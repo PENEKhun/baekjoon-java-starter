@@ -17,7 +17,7 @@ public class SourceCodeTemplate {
   public static final String REPLACED_TITLE = "{{title}}";
   public static final String REPLACED_TEST_CASES = "// {{test_case}}";
 
-  private static String readFile(String filePath) throws IOException {
+  public static String readFile(String filePath) throws IOException {
     StringBuilder sourceCode = new StringBuilder();
     try (InputStream inputStream = SourceCodeTemplate.class.getClassLoader()
         .getResourceAsStream(filePath);
