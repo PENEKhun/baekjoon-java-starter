@@ -12,6 +12,7 @@ public class SourceCodeTemplate {
 
   public static final String MAIN_JAVA_FILE = "code_sample/Main.java";
   public static final String TEST_JAVA_FILE = "code_sample/TestHelper.java";
+  public static final String NO_TEST_JAVA_FILE = "code_sample/NoTestHelper.java";
   public static final String REPLACED_NUMBER = "{{number}}";
   public static final String REPLACED_TITLE = "{{title}}";
   public static final String REPLACED_TEST_CASES = "// {{test_case}}";
@@ -43,7 +44,7 @@ public class SourceCodeTemplate {
 
   public static String getTestCode(List<TestCase> testCases) {
     if (testCases.isEmpty()) {
-      return readFile(TEST_JAVA_FILE);
+      return readFile(NO_TEST_JAVA_FILE);
     }
 
     StringBuilder testCaseCode = new StringBuilder();
