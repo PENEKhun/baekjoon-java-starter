@@ -1,27 +1,46 @@
 package kr.huni.code.generator;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Objects;
 import kr.huni.problem_parser.TestCase;
 
 public class SourceCodeTemplate {
 
+  public static final String MAIN_JAVA_FILE = "code_sample/Main.java";
+  public static final String TEST_JAVA_FILE = "code_sample/TestHelper.java";
+  public static final String REPLACED_NUMBER = "{{number}}";
+  public static final String REPLACED_TITLE = "{{title}}";
+  public static final String REPLACED_TEST_CASES = "// {{test_case}}";
+
   public static String getMainCode(int number, String title) {
-    return String.format("""
-        import java.util.Scanner;
+    StringBuilder sourceCode = new StringBuilder();
+    try (InputStream inputStream = SourceCodeTemplate.class.getClassLoader()
+        .getResourceAsStream(MAIN_JAVA_FILE);
+        InputStreamReader inputStreamReader = new InputStreamReader(
+            Objects.requireNonNull(inputStream));
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
 
-        /*
-            BAEKJOON #%d %s
-            https://www.acmicpc.net/problem/%d
-        */
+      String line;
+      while ((line = bufferedReader.readLine()) != null) {
+        line = line.replace(REPLACED_NUMBER, String.valueOf(number))
+            .replace(REPLACED_TITLE, title);
 
-        public class Main {
-          public static void main(String[] args) {
-            Scanner scanner = new Scanner(System.in);
-            // 코드를 작성하세요.
-          }
-        }
-        """, number, title, number);
+        // 수정된 라인을 소스 코드에 추가
+        sourceCode.append(line).append("\n");
+      }
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    // 수정된 소스 코드 반환
+    return sourceCode.toString();
   }
+
 
   public static String getTestCode(List<TestCase> testCases) {
     if (testCases.isEmpty()) {
@@ -35,112 +54,40 @@ public class SourceCodeTemplate {
           """;
     }
 
-    StringBuilder code = new StringBuilder("""
-        import java.io.ByteArrayInputStream;
-        import java.io.ByteArrayOutputStream;
-        import java.io.PrintStream;
-                
-        /**
-         * 이 테스트코드는 <a href="https://github.com/PENEKhun/Baekjoon-java-starter">Baekjoon-java-starter </a>를 사용하여 생성되었습니다.
-         * @Author : PENEKhun
-         */
-        public class TestHelper {
-                
-          public static class TestCase {
-            public String input;
-            public String expectedOutput;
-                
-            public TestCase(String input, String expectedOutput) {
-              this.input = input;
-              this.expectedOutput = expectedOutput;
-            }
-          }
-        """);
+    StringBuilder sourceCode = new StringBuilder();
 
-    code.append("""
-        public static void main(String[] args) {
-          TestCase[] testCases = new TestCase[]{
-          """);
-
+    StringBuilder testCaseCode = new StringBuilder();
     for (TestCase testCase : testCases) {
-      code.append("""
-          new TestCase(
-          // input
-          \"""
-          %s
-          \""",
-          // output
-          \"""
-          %s
-          \"""),
-            """.formatted(testCase.input(), testCase.output()));
+      testCaseCode.append("""
+                    new TestCase(
+                    // input
+                    \"""
+                    %s
+                    \""",
+                    // output
+                    \"""
+                    %s
+                    \"""),
+          """.formatted(testCase.input(), testCase.output()));
     }
 
-    code.append("""
-              };
-              
-              int passedCases = 0;
-              
-              for (int i = 0; i < testCases.length; i++) {
-                TestCase testCase = testCases[i];
-                
-                System.out.println("========================================");
-                System.out.println("입력 값: " + testCase.input);
-                System.out.println("기대 값: " + testCase.expectedOutput);
-                
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                PrintStream printStream = new PrintStream(outputStream);
-                PrintStream printOut = System.out;
-                System.setOut(printStream);
-                System.setIn(new ByteArrayInputStream(testCase.input.getBytes()));
-                
-                try {
-                  Main.main(new String[0]);
-                } catch (Exception e) {
-                  printFail(i + 1, testCase, e.getMessage());
-                  continue;
-                }
+    try (InputStream inputStream = SourceCodeTemplate.class.getClassLoader()
+        .getResourceAsStream(TEST_JAVA_FILE);
+        InputStreamReader inputStreamReader = new InputStreamReader(
+            Objects.requireNonNull(inputStream));
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
 
-                String output = outputStream.toString();
-                System.setOut(printOut);
-                if (output.equals(testCase.expectedOutput)) {
-                  passedCases++;
-                  continue;
-                } else {
-                  printFail(i + 1, testCase,
-                      red(""\"
-                          [실제 값]
-                          %s
-                          ""\".formatted(output)));
-                }
-                
-              }
-              
-              System.out.println("테스트 완료 (" + passedCases + " / " + testCases.length + ")");
-              if (passedCases == testCases.length) {
-                System.out.println("주어진 케이스에 대해 잘 동작하고 있습니다.");
-              }
-            }
-            
-            public static void printFail(int caseNumber, TestCase testCase, String message) {
-              System.out.printf(""\"
-                  ====== %s ======%n
-                  [입력 값]
-                  %s
-                  [기대 값]
-                  %s%n
-                  ""\", red(caseNumber + " 번째 케이스 실패 "), testCase.input, testCase.expectedOutput);
-              
-              System.out.println(message);
-            }
-            
-            public static String red(String message) {
-              return "\\u001B[31m%s\\u001B[0m".formatted(message);
-            }
-          }
-        """);
+      String line;
+      while ((line = bufferedReader.readLine()) != null) {
+        line = line.replace(REPLACED_TEST_CASES, testCaseCode.toString());
+        sourceCode.append(line).append("\n");
+      }
 
-    return code.toString();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return sourceCode.toString();
   }
 
 }
