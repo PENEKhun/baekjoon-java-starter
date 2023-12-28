@@ -15,10 +15,27 @@ class UserConfigurationTest {
     UserConfiguration defaultConfiguration = UserConfiguration.defaultConfiguration();
 
     // then
-    Assertions.assertSame(defaultConfiguration.srcCommentFormat.getDefaultValue(),
-        UserConfiguration.defaultConfiguration().srcCommentFormat.getValue());
+    Assertions.assertSame(defaultConfiguration.mainCodeTemplate.getDefaultValue(),
+        UserConfiguration.defaultConfiguration().mainCodeTemplate.getValue());
     Assertions.assertSame(defaultConfiguration.srcDirPrefix.getDefaultValue(),
         UserConfiguration.defaultConfiguration().srcDirPrefix.getValue());
+  }
+
+  @Test
+  @DisplayName("merge() 메서드는 인자로 받은 Configuration 객체의 value 값을 병합한다.")
+  void merge() {
+    // given
+    UserConfiguration userConfiguration = UserConfiguration.defaultConfiguration();
+    UserConfiguration userConfiguration2 = UserConfiguration.defaultConfiguration();
+    userConfiguration.srcDirPrefix.setValue("1");
+    userConfiguration2.srcDirPrefix.setValue("2");
+
+    // when
+    userConfiguration.merge(userConfiguration2);
+
+    // then
+    Assertions.assertSame("2", userConfiguration.srcDirPrefix.getValue());
+
   }
 
   @Test

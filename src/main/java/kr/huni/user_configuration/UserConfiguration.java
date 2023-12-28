@@ -1,5 +1,6 @@
 package kr.huni.user_configuration;
 
+import kr.huni.code.generator.SourceCodeTemplate;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,17 +17,12 @@ public class UserConfiguration {
               """)
           .defaultValue("p")
           .build();
-  public final UserConfigurationField srcCommentFormat =
+  public final UserConfigurationField mainCodeTemplate =
       UserConfigurationField.builder()
           .description("""
-              Main.java 소스코드의 상단에 주석으로 추가될 내용을 지정합니다. {{number}}는 문제번호, {{title}}은 문제제목으로 치환됩니다.
+              Main.java 파일의 템플릿입니다. 예악어 {{number}}와 {{title}}을 사용하면 문제번호와 문제제목으로 자동 치환됩니다.
               """)
-          .defaultValue("""
-              /*
-                  BAEKJOON {{number}} {{title}}
-                  https://www.acmicpc.net/problem/{{number}}
-              */
-              """)
+          .defaultValue(SourceCodeTemplate.DEFAULT_MAIN_CODE_TEMPLATE)
           .build();
 
   public static UserConfiguration defaultConfiguration() {
@@ -41,15 +37,15 @@ public class UserConfiguration {
         설정 정보를 출력합니다.
         srcDirPrefix : {}
         srcCommentFormat : {}
-        """, srcDirPrefix.getValue(), srcCommentFormat.getValue());
+        """, srcDirPrefix.getValue(), mainCodeTemplate.getValue());
   }
 
   void printHelp() {
     log.info("""
         설정 값 설명:
         srcDirPrefix : {}
-        srcCommentFormat : {}
-        """, srcDirPrefix.toString(), srcCommentFormat.toString());
+        mainCodeTemplate : {}
+        """, srcDirPrefix.toString(), mainCodeTemplate.toString());
   }
 
   protected UserConfiguration() {
@@ -57,6 +53,6 @@ public class UserConfiguration {
 
   public void merge(UserConfiguration userConfiguration) {
     this.srcDirPrefix.setValue(userConfiguration.srcDirPrefix.getValue());
-    this.srcCommentFormat.setValue(userConfiguration.srcCommentFormat.getValue());
+    this.mainCodeTemplate.setValue(userConfiguration.mainCodeTemplate.getValue());
   }
 }
