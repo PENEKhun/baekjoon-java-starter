@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("SourceCodeTemplate 테스트")
-class SourceCodeTemplateTest {
+class SourceCodeTemplateTests {
 
   @Test
   @DisplayName("main 메소드가 존재하는 소스코드는 컴파일이 잘 된다.")

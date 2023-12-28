@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Problem 유닛 테스트")
-class ProblemTest {
+class ProblemTests {
 
   @Test
   @DisplayName("Problem을 생성하면 directory 문자열 앞에 ./p가 붙는다.")
