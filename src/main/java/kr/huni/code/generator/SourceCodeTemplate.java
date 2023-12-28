@@ -16,78 +16,52 @@ public class SourceCodeTemplate {
   public static final String REPLACED_TITLE = "{{title}}";
   public static final String REPLACED_TEST_CASES = "// {{test_case}}";
 
-  public static String getMainCode(int number, String title) {
+  private static String readFile(String filePath) {
     StringBuilder sourceCode = new StringBuilder();
     try (InputStream inputStream = SourceCodeTemplate.class.getClassLoader()
-        .getResourceAsStream(MAIN_JAVA_FILE);
+        .getResourceAsStream(filePath);
         InputStreamReader inputStreamReader = new InputStreamReader(
             Objects.requireNonNull(inputStream));
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
 
       String line;
       while ((line = bufferedReader.readLine()) != null) {
-        line = line.replace(REPLACED_NUMBER, String.valueOf(number))
-            .replace(REPLACED_TITLE, title);
-
-        // 수정된 라인을 소스 코드에 추가
         sourceCode.append(line).append("\n");
       }
 
     } catch (IOException e) {
       e.printStackTrace();
     }
-
-    // 수정된 소스 코드 반환
     return sourceCode.toString();
   }
 
+  public static String getMainCode(int number, String title) {
+    String template = readFile(MAIN_JAVA_FILE);
+    return template.replace(REPLACED_NUMBER, String.valueOf(number))
+        .replace(REPLACED_TITLE, title);
+  }
 
   public static String getTestCode(List<TestCase> testCases) {
     if (testCases.isEmpty()) {
-      return """    
-          public class TestHelper {
-                
-            public static void main() {
-              System.out.println("해당 문제는 테스트 케이스가 없습니다.");
-            }
-          }
-          """;
+      return readFile(TEST_JAVA_FILE);
     }
-
-    StringBuilder sourceCode = new StringBuilder();
 
     StringBuilder testCaseCode = new StringBuilder();
     for (TestCase testCase : testCases) {
       testCaseCode.append("""
-                    new TestCase(
-                    // input
-                    \"""
-                    %s
-                    \""",
-                    // output
-                    \"""
-                    %s
-                    \"""),
+          new TestCase(
+          // input
+          \"""
+          %s
+          \""",
+          // output
+          \"""
+          %s
+          \"""),
           """.formatted(testCase.input(), testCase.output()));
     }
 
-    try (InputStream inputStream = SourceCodeTemplate.class.getClassLoader()
-        .getResourceAsStream(TEST_JAVA_FILE);
-        InputStreamReader inputStreamReader = new InputStreamReader(
-            Objects.requireNonNull(inputStream));
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
-
-      String line;
-      while ((line = bufferedReader.readLine()) != null) {
-        line = line.replace(REPLACED_TEST_CASES, testCaseCode.toString());
-        sourceCode.append(line).append("\n");
-      }
-
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    return sourceCode.toString();
+    String template = readFile(TEST_JAVA_FILE);
+    return template.replace(REPLACED_TEST_CASES, testCaseCode.toString());
   }
-
 }
