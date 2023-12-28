@@ -3,10 +3,12 @@ package kr.huni.problem_parser;
 import java.io.IOException;
 import java.util.ArrayList;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+@Slf4j
 public class ProblemParser {
 
   private static final String BOJ_URL = "https://www.acmicpc.net/problem/";
@@ -32,10 +34,7 @@ public class ProblemParser {
     this.document = validProblem(number);
 
     String title = this.document.select(PROBLEM_TITLE_SELECTOR).text();
-    System.out.printf("""
-        문제 정보 파싱완료
-             제목 : %s
-        %n""", title);
+    log.info("[문제 정보 파싱완료]문제 제목 : {}", title);
     this.problem = new Problem(number, title, parseTestCases());
   }
 
