@@ -14,14 +14,18 @@ public class CodeGenerator {
     this.problem = problem;
   }
 
-  public void generate() throws IOException {
-    String codeTemplate = SourceCodeTemplate.getMainCode(this.problem.getNumber(),
-        this.problem.getTitle());
-    String testCodeTemplate = SourceCodeTemplate.getTestCode(this.problem.getTestCases());
+  public void generate() {
+    try {
+      String codeTemplate = SourceCodeTemplate.getMainCode(this.problem.getNumber(),
+          this.problem.getTitle());
+      String testCodeTemplate = SourceCodeTemplate.getTestCode(this.problem.getTestCases());
 
-    FileUtil fileUtil = new FileUtil();
-    fileUtil.createDirectory(this.problem.getDirectory());
-    fileUtil.write(codeTemplate, testCodeTemplate);
-    log.info("소스코드 생성 완료");
+      FileUtil fileUtil = new FileUtil();
+      fileUtil.createDirectory(this.problem.getDirectory());
+      fileUtil.write(codeTemplate, testCodeTemplate);
+      log.info("소스코드 생성 완료");
+    } catch (IOException e) {
+      log.error("소스코드 생성 실패", e);
+    }
   }
 }

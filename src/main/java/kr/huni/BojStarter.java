@@ -18,11 +18,7 @@ public class BojStarter {
   public void start() {
     ProblemParser parser = new ProblemParser(this.problemNumber);
     CodeGenerator generator = new CodeGenerator(parser.getProblem());
-    try {
-      generator.generate();
-    } catch (IOException e) {
-      log.error("소스코드 생성 실패", e);
-    }
+    generator.generate();
     IntellijRunManager runManager = new IntellijRunManager();
     try {
       runManager.run(parser.getProblem().getDirectory());
