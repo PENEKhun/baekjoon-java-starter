@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
+import java.util.Scanner;
 import kr.huni.code_generator.SourceCodeTemplateImpl;
 
 /**
@@ -35,20 +36,17 @@ public interface SourceCodeFile {
    */
   default void writeToFile(File srcDir, String fileName, String sourceCode) {
     File file = new File(srcDir, fileName);
+
     if (file.exists()) {
       System.out.printf("%s/%s가 이미 존재합니다. 새롭게 덮어 씌우시겠습니까? (y, n): ", srcDir.getAbsoluteFile(),
           fileName);
-      BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(System.in));
-      try {
-        String answer = reader.readLine();
-        if (!answer.equals("y")) {
-          System.out.println("파일을 덮어 씌웁니다.");
-        } else {
-          System.out.println("파일을 덮어 씌우지 않고 진행합니다.");
-          return;
-        }
-      } catch (IOException e) {
-        System.out.println("입력이 잘못 되었습니다. 파일을 덮어 씌우지 않고 진행합니다.");
+      Scanner reader = new Scanner(System.in);
+      String answer = reader.nextLine();
+      if (answer.equals("y")) {
+        System.out.println("파일을 덮어 씌웁니다.");
+      } else {
+        System.out.println("파일을 덮어 씌우지 않고 진행합니다.");
+        return;
       }
     }
 
