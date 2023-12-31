@@ -10,7 +10,7 @@ public class Problem {
 
   private final int number;
   private final String title;
-  private final String directory;
+  private final String sourceCodeDirectory;
   private final List<TestCase> testCases;
 
   public Problem(int number, String title, List<TestCase> testCases) {
@@ -18,7 +18,7 @@ public class Problem {
 
     this.number = number;
     this.title = title;
-    this.directory = configuration.srcDirPrefix.getValue() + number;
+    this.sourceCodeDirectory = configuration.srcDirPrefix.getValue() + number;
     this.testCases = testCases;
   }
 
