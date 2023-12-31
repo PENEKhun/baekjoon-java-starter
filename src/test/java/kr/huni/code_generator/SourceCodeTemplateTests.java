@@ -3,36 +3,38 @@ package kr.huni.code_generator;
 import java.io.IOException;
 import java.util.ArrayList;
 import kr.huni.DynamicCodeCompileSupporter;
-import kr.huni.code.generator.SourceCodeTemplate;
+import kr.huni.file_generator.SourceCodeFile;
 import kr.huni.problem_parser.TestCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("SourceCodeTemplate 테스트")
+@DisplayName("SourceCodeTemplate 에서")
 class SourceCodeTemplateTests {
 
   @Test
-  @DisplayName("Main.java 기본 템플릿은 컴파일이 잘 된다.")
+  @DisplayName("생성되는 기본 Main.java 기본 템플릿은 문법적으로 오류가 없다.")
   void main_syntax_fine() throws IOException {
     // given
-    String mainSourceCode = SourceCodeTemplate.getMainCode(1000, "A+B", false);
+    SourceCodeTemplateImpl sourceCodeTemplate = new SourceCodeTemplateImpl();
+    String mainSourceCode = sourceCodeTemplate.getMainCode(1000, "A+B");
 
     // when
-    boolean compileWorking = DynamicCodeCompileSupporter.checkCompileWorking(mainSourceCode);
+    boolean compileWorking = DynamicCodeCompileSupporter.checkCompileWorking(mainSourceCode, null);
 
     // then
     Assertions.assertTrue(compileWorking);
   }
 
   @Test
-  @DisplayName("테스트케이스가 있을때 생성된 TestHelper.java는 컴파일이 잘 된다.")
+  @DisplayName("테스트케이스가 있을때 생성된 TestHelper.java는 문법적으로 오류가 없다.")
   void test_syntax_fine() throws IOException {
     // given
     ArrayList<TestCase> testCases = new ArrayList<>();
     testCases.add(new TestCase("1 2", "3"));
 
-    String testCode = SourceCodeTemplate.getTestCode(testCases);
+    SourceCodeTemplateImpl sourceCodeTemplate = new SourceCodeTemplateImpl();
+    String testCode = sourceCodeTemplate.getTestCode(testCases);
     testCode += """
             class Main {
               public static void main(String[] args) {
@@ -42,37 +44,32 @@ class SourceCodeTemplateTests {
         """;
 
     // when
-    boolean working = DynamicCodeCompileSupporter.checkCompileWorking(testCode);
+    boolean working = DynamicCodeCompileSupporter.checkCompileWorking(testCode, null);
 
     // then
     Assertions.assertTrue(working);
   }
 
   @Test
-  @DisplayName("테스트 케이스가 없을때 생성된 TestHelper.java도 컴파일이 잘 된다.")
+  @DisplayName("테스트 케이스가 없을때 생성된 NoTestHelper.java는 문법적으로 오류가 없다.")
   void test_syntax_fine_with_no_case() throws IOException {
     // given
-    String testCode = SourceCodeTemplate.getTestCode(new ArrayList<>());
-    testCode += """
-            class Main {
-              public static void main(String[] args) {
-                // do nothing
-              }
-            }
-        """;
+    SourceCodeTemplateImpl sourceCodeTemplate = new SourceCodeTemplateImpl();
+    String testCode = sourceCodeTemplate.getTestCode(new ArrayList<>());
 
     // when
-    boolean working = DynamicCodeCompileSupporter.checkCompileWorking(testCode);
+    boolean working = DynamicCodeCompileSupporter.checkCompileWorking(testCode, null);
 
     // then
     Assertions.assertTrue(working);
   }
 
   @Test
-  @DisplayName("테스트 케이스가 없을 때 NoTestHelper.java 내용이 잘 로드된다.")
+  @DisplayName("테스트케이스가 없을때 생성된 NoTestHelper.java 는 고정된 코드 문자를 반환한다.")
   void noTestHelper_load_well() throws IOException {
     // given
-    String noTestHelperCode = SourceCodeTemplate.getTestCode(new ArrayList<>());
+    SourceCodeTemplateImpl sourceCodeTemplate = new SourceCodeTemplateImpl();
+    String noTestHelperCode = sourceCodeTemplate.getTestCode(new ArrayList<>());
 
     // when & then
     Assertions.assertEquals(
@@ -88,31 +85,15 @@ class SourceCodeTemplateTests {
     );
   }
 
-//  @Test
-//  @DisplayName("Main.java 코드 템플릿에 치환 문자가 존재 한다.")
-//  void main_replace_text_exist() throws IOException {
-//    // given
-//    String codePath = SourceCodeTemplate.MAIN_JAVA_FILE;
-//    String replacedNumberSymbol = SourceCodeTemplate.REPLACED_NUMBER;
-//    String replacedTitleSymbol = SourceCodeTemplate.REPLACED_TITLE;
-//
-//    // when
-//    String sourceCode = SourceCodeTemplate.readFile(codePath);
-//
-//    // then
-//    Assertions.assertTrue(sourceCode.contains(replacedNumberSymbol));
-//    Assertions.assertTrue(sourceCode.contains(replacedTitleSymbol));
-//  }
-
   @Test
   @DisplayName("TestHelper.java 코드 템플릿에 치환 문자가 존재 한다.")
   void test_replace_text_exist() throws IOException {
     // given
-    String codePath = SourceCodeTemplate.TEST_JAVA_FILE;
-    String replacedTestCaseSymbol = SourceCodeTemplate.REPLACED_TEST_CASES;
+    String codePath = SourceCodeTemplateImpl.TEST_JAVA_FILE;
+    String replacedTestCaseSymbol = SourceCodeTemplateImpl.REPLACED_TEST_CASES;
 
     // when
-    String sourceCode = SourceCodeTemplate.readFile(codePath);
+    String sourceCode = SourceCodeFile.readFile(codePath);
 
     // then
     Assertions.assertTrue(sourceCode.contains(replacedTestCaseSymbol));
