@@ -36,7 +36,6 @@ public interface SourceCodeFile {
    */
   default void writeToFile(File srcDir, String fileName, String sourceCode) {
     File file = new File(srcDir, fileName);
-
     if (file.exists()) {
       System.out.printf("%s/%s가 이미 존재합니다. 새롭게 덮어 씌우시겠습니까? (y, n): ", srcDir.getAbsoluteFile(),
           fileName);
@@ -59,13 +58,13 @@ public interface SourceCodeFile {
   }
 
   /**
-   * 파일을 읽어서 String 반환합니다.
+   * Resources 경로에서 파일을 읽어서 String 반환합니다.
    *
    * @param filePath 파일 경로
    * @return 파일 내용
    * @throws IOException 파일 읽기 실패
    */
-  static String readFile(String filePath) throws IOException {
+  static String readFileFromResource(String filePath) throws IOException {
     StringBuilder sourceCode = new StringBuilder();
     try (InputStream inputStream = SourceCodeTemplateImpl.class.getClassLoader()
         .getResourceAsStream(filePath);

@@ -26,7 +26,7 @@ public class SourceCodeTemplateImpl implements SourceCodeTemplate {
 
   public String getTestCode(List<TestCase> testCases) throws IOException {
     if (testCases.isEmpty()) {
-      return SourceCodeFile.readFile(NO_TEST_JAVA_FILE);
+      return SourceCodeFile.readFileFromResource(NO_TEST_JAVA_FILE);
     }
 
     StringBuilder testCaseCode = new StringBuilder();
@@ -44,7 +44,7 @@ public class SourceCodeTemplateImpl implements SourceCodeTemplate {
           """.formatted(testCase.input(), testCase.output()));
     }
 
-    String template = SourceCodeFile.readFile(TEST_JAVA_FILE);
+    String template = SourceCodeFile.readFileFromResource(TEST_JAVA_FILE);
     return template.replace(REPLACED_TEST_CASES, testCaseCode.toString());
   }
 }

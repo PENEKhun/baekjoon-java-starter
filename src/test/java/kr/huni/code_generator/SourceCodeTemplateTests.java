@@ -93,7 +93,7 @@ class SourceCodeTemplateTests {
     String replacedTestCaseSymbol = SourceCodeTemplateImpl.REPLACED_TEST_CASES;
 
     // when
-    String sourceCode = SourceCodeFile.readFile(codePath);
+    String sourceCode = SourceCodeFile.readFileFromResource(codePath);
 
     // then
     Assertions.assertTrue(sourceCode.contains(replacedTestCaseSymbol));
