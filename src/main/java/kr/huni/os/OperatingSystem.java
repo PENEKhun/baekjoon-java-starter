@@ -1,5 +1,8 @@
-package kr.huni.code.os;
+package kr.huni.os;
 
+/**
+ * 현재 운영체제를 나타내는 enum 운영체제 마다 IDE가 열리는 방식이 다르기 때문에, 운영체제를 구분해야 한다.
+ */
 public enum OperatingSystem {
   WINDOWS,
   LINUX,

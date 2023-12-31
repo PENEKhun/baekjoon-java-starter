@@ -29,8 +29,9 @@ public class TestHelper {
       try {
         Main.main(new String[0]);
       } catch (Exception e) {
-        printFail(i + 1, testCase, e.getMessage());
-        continue;
+        System.setOut(printOut);
+        printFail(i + 1, testCase, "Exception 발생");
+        e.printStackTrace();
       }
 
       String output = outputStream.toString();

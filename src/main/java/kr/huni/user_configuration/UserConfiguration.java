@@ -1,6 +1,6 @@
 package kr.huni.user_configuration;
 
-import kr.huni.code.generator.SourceCodeTemplate;
+import kr.huni.code_generator.SourceCodeTemplateImpl;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -22,7 +22,7 @@ public class UserConfiguration {
           .description("""
               Main.java 파일의 템플릿입니다. 예악어 {{number}}와 {{title}}을 사용하면 문제번호와 문제제목으로 자동 치환됩니다.
               """)
-          .defaultValue(SourceCodeTemplate.DEFAULT_MAIN_CODE_TEMPLATE)
+          .defaultValue(SourceCodeTemplateImpl.DEFAULT_MAIN_CODE_TEMPLATE)
           .build();
 
   public static UserConfiguration defaultConfiguration() {
@@ -30,7 +30,7 @@ public class UserConfiguration {
   }
 
   /**
-   * Configuration 객체를 JSON 형태로 출력합니다.
+   * Configuration 객체를 로그로 출력합니다.
    */
   void printValue() {
     log.info("""
@@ -38,14 +38,6 @@ public class UserConfiguration {
         srcDirPrefix : {}
         srcCommentFormat : {}
         """, srcDirPrefix.getValue(), mainCodeTemplate.getValue());
-  }
-
-  void printHelp() {
-    log.info("""
-        설정 값 설명:
-        srcDirPrefix : {}
-        mainCodeTemplate : {}
-        """, srcDirPrefix.toString(), mainCodeTemplate.toString());
   }
 
   protected UserConfiguration() {

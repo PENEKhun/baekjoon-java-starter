@@ -61,7 +61,7 @@ public class UserConfigurationLoader {
         UserConfiguration configuration = defaultConfiguration();
         String jsonString = new ObjectMapper().writeValueAsString(configuration);
 
-        writeStringToFile(jsonString, CONFIGURATION_FILE_NAME);
+        writeStringToFile(jsonString);
         return;
       }
       throw new IOException("파일 생성 오류");
@@ -70,8 +70,9 @@ public class UserConfigurationLoader {
     }
   }
 
-  private static void writeStringToFile(String content, String fileName) throws IOException {
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+  private static void writeStringToFile(String content) throws IOException {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(
+        UserConfigurationLoader.CONFIGURATION_FILE_NAME))) {
       writer.write(content);
       log.info("JSON 문자열을 파일에 성공적으로 썼습니다.");
     } catch (IOException e) {
