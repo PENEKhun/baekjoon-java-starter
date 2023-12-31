@@ -1,6 +1,6 @@
 package kr.huni.user_configuration;
 
-import kr.huni.code.generator.SourceCodeTemplate;
+import kr.huni.code_generator.SourceCodeTemplateImpl;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -22,7 +22,7 @@ public class UserConfiguration {
           .description("""
               Main.java 파일의 템플릿입니다. 예악어 {{number}}와 {{title}}을 사용하면 문제번호와 문제제목으로 자동 치환됩니다.
               """)
-          .defaultValue(SourceCodeTemplate.DEFAULT_MAIN_CODE_TEMPLATE)
+          .defaultValue(SourceCodeTemplateImpl.DEFAULT_MAIN_CODE_TEMPLATE)
           .build();
 
   public static UserConfiguration defaultConfiguration() {
