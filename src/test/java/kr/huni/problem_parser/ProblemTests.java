@@ -18,6 +18,6 @@ class ProblemTests {
     String expected = srcDirPrefix + problemId;
 
     // then
-    Assertions.assertEquals(expected, problem.getSourceCodeDirectory());
+    Assertions.assertEquals(expected, problem.getSourceRootDirectory());
   }
 }

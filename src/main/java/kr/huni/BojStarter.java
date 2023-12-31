@@ -30,7 +30,7 @@ public class BojStarter {
 
   private void openSourceCodeWithIde(Problem problem) {
     try {
-      codeOpenManager.run(problem.getSourceCodeDirectory(), OperatingSystem.getOperatingSystem());
+      codeOpenManager.run(problem.getSourceRootDirectory(), OperatingSystem.getOperatingSystem());
     } catch (IOException e) {
       log.error("""
           [ERROR]
@@ -38,14 +38,13 @@ public class BojStarter {
           직접 IntelliJ IDEA를 실행해서 프로젝트를 열어주세요.
           생성된 프로젝트 경로 : {}
           %n
-          """, problem.getSourceCodeDirectory(), e);
+          """, problem.getSourceRootDirectory(), e);
     }
   }
 
   private void createSrcFile(Problem problem, GeneratedCode generatedCode) {
     try {
-      fileUtil.createDirectory(problem.getSourceCodeDirectory());
-      fileUtil.write(problem.getSourceCodeDirectory(), generatedCode.mainCode(),
+      fileUtil.write(problem.getSourceRootDirectory(), generatedCode.mainCode(),
           generatedCode.testCode());
     } catch (IOException e) {
       log.error("소스코드 파일 또는 디렉토리 생성에 실패했습니다.", e);
