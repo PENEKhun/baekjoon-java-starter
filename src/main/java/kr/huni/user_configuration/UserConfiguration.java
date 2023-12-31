@@ -30,7 +30,7 @@ public class UserConfiguration {
   }
 
   /**
-   * Configuration 객체를 JSON 형태로 출력합니다.
+   * Configuration 객체를 로그로 출력합니다.
    */
   void printValue() {
     log.info("""
@@ -38,14 +38,6 @@ public class UserConfiguration {
         srcDirPrefix : {}
         srcCommentFormat : {}
         """, srcDirPrefix.getValue(), mainCodeTemplate.getValue());
-  }
-
-  void printHelp() {
-    log.info("""
-        설정 값 설명:
-        srcDirPrefix : {}
-        mainCodeTemplate : {}
-        """, srcDirPrefix.toString(), mainCodeTemplate.toString());
   }
 
   protected UserConfiguration() {
