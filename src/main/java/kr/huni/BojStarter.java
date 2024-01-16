@@ -1,7 +1,7 @@
 package kr.huni;
 
 import java.io.IOException;
-import kr.huni.code_generator.CodeGenerator;
+import kr.huni.code_generator.FileContentGenerator;
 import kr.huni.code_generator.GeneratedCode;
 import kr.huni.code_runner.CodeOpenManager;
 import kr.huni.file_generator.JavaSourceCodeFile;
@@ -17,12 +17,16 @@ public class BojStarter {
 
   private final CodeOpenManager codeOpenManager;
   private final JavaSourceCodeFile fileUtil;
-  private final CodeGenerator codeGenerator;
+  private final FileContentGenerator codeGenerator;
   private final BaekjoonProblemParser problemParser;
 
   public void run(final int problemNumber) {
     Problem problem = problemParser.parse(problemNumber);
-    GeneratedCode generatedCode = codeGenerator.generate(problem);
+    if (!problem.isExist()) {
+      log.error("문제를 찾을 수 없습니다.");
+      return;
+    }
+    GeneratedCode generatedCode = codeGenerator.generateCode(problem);
 
     createSrcFile(problem, generatedCode);
     openSourceCodeWithIde(problem);
@@ -45,7 +49,7 @@ public class BojStarter {
   private void createSrcFile(Problem problem, GeneratedCode generatedCode) {
     try {
       fileUtil.write(problem.getSourceRootDirectory(), generatedCode.mainCode(),
-          generatedCode.testCode());
+          generatedCode.testCode(), codeGenerator.generateMarkdown(problem));
     } catch (IOException e) {
       log.error("소스코드 파일 또는 디렉토리 생성에 실패했습니다.", e);
     }

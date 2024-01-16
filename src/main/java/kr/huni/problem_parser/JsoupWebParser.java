@@ -29,12 +29,16 @@ public class JsoupWebParser implements WebParser {
   }
 
   @Override
-  public String[] parse(String selector) {
+  public String[] parse(String selector, boolean includeHtml) {
 
     Elements result = this.document.select(selector);
     String[] arr = new String[result.size()];
     for (int i = 0; i < result.size(); i++) {
-      arr[i] = result.get(i).text();
+      if (includeHtml) {
+        arr[i] = result.get(i).html();
+      } else {
+        arr[i] = result.get(i).text();
+      }
     }
 
     return arr;

@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
 import java.util.Scanner;
-import kr.huni.code_generator.SourceCodeTemplateImpl;
+import kr.huni.code_generator.JavaTemplate;
 
 /**
  * 소스코드 파일을 생성하고, 내용을 채워주기 위한 인터페이스
@@ -25,16 +25,17 @@ public interface SourceCodeFile {
    * @implSpec 해당 메서드안에서 필요한 하위 폴더를 생성하고, {@link #writeToFile(File, String, String)}를 통해 알고리즘을 구현할
    * 소스코드 파일과 테스트 코드 파일을 생성해야합니다.
    */
-  void write(String directory, String sourceCode, String testCode) throws IOException;
+  void write(String directory, String sourceCode, String testCode, String readme)
+      throws IOException;
 
   /**
    * 파일을 생성하고, 내용을 채웁니다.
    *
-   * @param srcDir     소스코드를 저장할 위치가 담긴 객체
-   * @param fileName   파일 이름
-   * @param sourceCode 파일 내용
+   * @param srcDir   소스코드를 저장할 위치가 담긴 객체
+   * @param fileName 파일 이름
+   * @param content  파일 내용
    */
-  default void writeToFile(File srcDir, String fileName, String sourceCode) {
+  default void writeToFile(File srcDir, String fileName, String content) {
     File file = new File(srcDir, fileName);
     if (file.exists()) {
       System.out.printf("%s/%s가 이미 존재합니다. 새롭게 덮어 씌우시겠습니까? (y, n): ", srcDir.getAbsoluteFile(),
@@ -50,7 +51,7 @@ public interface SourceCodeFile {
     }
 
     try (FileWriter fileWriter = new FileWriter(file)) {
-      fileWriter.write(sourceCode);
+      fileWriter.write(content);
     } catch (IOException e) {
       System.out.println("파일 생성 실패. 프로그램을 종료합니다.");
       throw new RuntimeException(e);
@@ -66,7 +67,7 @@ public interface SourceCodeFile {
    */
   static String readFileFromResource(String filePath) throws IOException {
     StringBuilder sourceCode = new StringBuilder();
-    try (InputStream inputStream = SourceCodeTemplateImpl.class.getClassLoader()
+    try (InputStream inputStream = JavaTemplate.class.getClassLoader()
         .getResourceAsStream(filePath);
         InputStreamReader inputStreamReader = new InputStreamReader(
             Objects.requireNonNull(inputStream));
