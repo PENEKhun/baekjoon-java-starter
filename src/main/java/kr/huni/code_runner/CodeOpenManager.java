@@ -10,6 +10,7 @@ public interface CodeOpenManager {
    * @throws IOException 실행 실패
    * @implSpec 주어진 codePath를 IDE로 열어준다
    */
-  void run(String codePath, OperatingSystem operatingSystem) throws IOException;
+  void run(String codePath, OperatingSystem operatingSystem)
+      throws IOException;
 
 }
