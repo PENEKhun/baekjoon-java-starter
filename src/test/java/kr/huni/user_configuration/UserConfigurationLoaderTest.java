@@ -35,12 +35,11 @@ class UserConfigurationLoaderTest {
   }
 
   @Test
-  @DisplayName("설정 파일에 없는 필드는 기본 값으로 덮어 씌워진다.")
+  @DisplayName("getInstance 호출시 설정 파일에 없는 필드는 기본 값으로 덮어 씌워진다.")
   void config_overwrite_work() throws IOException {
     // given
-    String srcDirPrefix = "p";
     Map<String, Object> configMap = new HashMap<>();
-    configMap.put("srcDirPrefix", Collections.singletonMap("value", srcDirPrefix));
+    configMap.put("srcDirPrefix", Collections.singletonMap("value", "p"));
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.writeValue(new File(CONFIGURATION_FILE_NAME), configMap);
 
@@ -49,8 +48,7 @@ class UserConfigurationLoaderTest {
 
     // then
     File file = new File(CONFIGURATION_FILE_NAME);
-
     String content = new String(Files.readAllBytes(file.toPath()));
-    assertTrue(content.contains("mainCodeTemplate"), "'mainCodeTemplate' 필드가 파일에 존재해야 합니다.");
+    assertTrue(content.contains("mainCodeTemplate"));
   }
 }
