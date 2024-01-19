@@ -42,9 +42,4 @@ public class UserConfiguration {
 
   protected UserConfiguration() {
   }
-
-  public void merge(UserConfiguration userConfiguration) {
-    this.srcDirPrefix.setValue(userConfiguration.srcDirPrefix.getValue());
-    this.mainCodeTemplate.setValue(userConfiguration.mainCodeTemplate.getValue());
-  }
 }
