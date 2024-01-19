@@ -15,10 +15,15 @@ class UserConfigurationTest {
     UserConfiguration defaultConfiguration = UserConfiguration.defaultConfiguration();
 
     // then
-    Assertions.assertSame(defaultConfiguration.mainCodeTemplate.getDefaultValue(),
-        UserConfiguration.defaultConfiguration().mainCodeTemplate.getValue());
-    Assertions.assertSame(defaultConfiguration.srcDirPrefix.getDefaultValue(),
-        UserConfiguration.defaultConfiguration().srcDirPrefix.getValue());
+    Assertions.assertAll(
+        () -> Assertions.assertSame(defaultConfiguration.mainCodeTemplate.getDefaultValue(),
+            UserConfiguration.defaultConfiguration().mainCodeTemplate.getValue()),
+        () -> Assertions.assertSame(defaultConfiguration.srcDirPrefix.getDefaultValue(),
+            UserConfiguration.defaultConfiguration().srcDirPrefix.getValue()),
+        () -> Assertions.assertSame(defaultConfiguration.markdownTemplate.getDefaultValue(),
+            UserConfiguration.defaultConfiguration().markdownTemplate.getValue()),
+        () -> Assertions.assertSame(defaultConfiguration.enableReadme(), true)
+    );
   }
 
   @Test
