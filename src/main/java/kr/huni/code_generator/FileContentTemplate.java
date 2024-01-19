@@ -4,18 +4,20 @@ import java.io.IOException;
 import java.util.List;
 import kr.huni.problem_parser.TestCase;
 
-public interface SourceCodeTemplate {
+public interface FileContentTemplate {
 
   String TEST_JAVA_FILE = "code_sample/TestHelper.java";
   String NO_TEST_JAVA_FILE = "code_sample/NoTestHelper.java";
   String REPLACED_NUMBER = "{{number}}";
   String REPLACED_TITLE = "{{title}}";
+  String REPLACED_DESCRIPTION = "{{description}}";
+  String REPLACED_URL = "{{url}}";
   String REPLACED_TEST_CASES = "// {{test_case}}";
   String DEFAULT_MAIN_CODE_TEMPLATE = """
       import java.util.Scanner;
             
       /*
-          BAEKJOON {{number}} {{title}}
+          BAEKJOON {{number}}번 {{title}}
           https://www.acmicpc.net/problem/{{number}}
       */
             
@@ -26,6 +28,17 @@ public interface SourceCodeTemplate {
           // 코드를 작성하세요.
         }
       }
+      """;
+  String DEFAULT_MARKDOWN_TEMPLATE = """
+      # {{title}}
+            
+      > 문제 번호 : {{number}} \s
+      > 출처 : {{url}}
+            
+      ## 문제 설명
+            
+      {{description}}
+            
       """;
 
   /**
@@ -44,5 +57,7 @@ public interface SourceCodeTemplate {
    * @return TestHelper.java 파일의 내용
    */
   String getTestCode(List<TestCase> testCases) throws IOException;
+
+  String getMarkdownContent(int number, String title, String description);
 
 }

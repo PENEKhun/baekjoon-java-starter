@@ -21,6 +21,7 @@ public class TestCleaner {
     Files.deleteIfExists(Path.of("p1000/src/Main.java"));
     Files.deleteIfExists(Path.of("p1000/src/TestHelper.java"));
     Files.deleteIfExists(Path.of("p1000/src/NoTestHelper.java"));
+    Files.deleteIfExists(Path.of("p1000/src/README.md"));
     Files.deleteIfExists(Path.of("p1000/src"));
     Files.deleteIfExists(Path.of("p1000"));
 

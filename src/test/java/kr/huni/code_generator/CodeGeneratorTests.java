@@ -14,10 +14,11 @@ class CodeGeneratorTests {
   void javaCodeGenerator_return_code() {
     // given
     JavaCodeGenerator javaCodeGenerator = new JavaCodeGenerator();
-    Problem problem = new Problem(-1, "A+B", new ArrayList<>());
+    Problem problem = new Problem(-1, "A+B", "두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.",
+        new ArrayList<>());
 
     // when
-    GeneratedCode generatedCode = javaCodeGenerator.generate(problem);
+    GeneratedCode generatedCode = javaCodeGenerator.generateCode(problem);
 
     // then
     Assertions.assertAll(
