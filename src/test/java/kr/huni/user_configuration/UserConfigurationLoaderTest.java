@@ -19,7 +19,6 @@ class UserConfigurationLoaderTest {
 
   @BeforeEach
   void setUp() {
-    // remove configuration file
     File file = new File(CONFIGURATION_FILE_NAME);
     if (file.exists()) {
       file.delete();
