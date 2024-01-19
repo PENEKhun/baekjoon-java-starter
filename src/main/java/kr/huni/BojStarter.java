@@ -51,7 +51,7 @@ public class BojStarter {
     try {
       fileUtil.write(problem.getSourceRootDirectory(), generatedCode.mainCode(),
           generatedCode.testCode(), codeGenerator.generateMarkdown(problem),
-          UserConfigurationLoader.getInstance().enableReadme());
+          UserConfigurationLoader.getInstance().enableReadme.getValue().equals("true"));
     } catch (IOException e) {
       log.error("소스코드 파일 또는 디렉토리 생성에 실패했습니다.", e);
     }
