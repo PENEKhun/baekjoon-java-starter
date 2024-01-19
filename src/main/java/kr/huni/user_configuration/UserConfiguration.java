@@ -50,8 +50,8 @@ public class UserConfiguration {
     log.info("""
             설정 정보를 출력합니다.
             srcDirPrefix : {}
-            srcCommentFormat : {}
             mainCodeTemplate : {}
+            markdownTemplate : {}
             enableReadme : {}
             """, srcDirPrefix.getValue(), mainCodeTemplate.getValue(), markdownTemplate.getValue(),
         enableReadme.getValue());
