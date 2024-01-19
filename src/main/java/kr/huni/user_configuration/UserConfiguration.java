@@ -31,7 +31,7 @@ public class UserConfiguration {
               """)
           .defaultValue(JavaTemplate.DEFAULT_MARKDOWN_TEMPLATE)
           .build();
-  private final UserConfigurationField enableReadme =
+  public final UserConfigurationField enableReadme =
       UserConfigurationField.builder()
           .description("""
               README.md 파일을 생성할지 여부를 결정합니다.
@@ -58,9 +58,5 @@ public class UserConfiguration {
   }
 
   protected UserConfiguration() {
-  }
-
-  public boolean enableReadme() {
-    return enableReadme.getValue().equals("true");
   }
 }
