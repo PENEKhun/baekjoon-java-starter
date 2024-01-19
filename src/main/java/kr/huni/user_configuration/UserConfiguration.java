@@ -31,6 +31,13 @@ public class UserConfiguration {
               """)
           .defaultValue(JavaTemplate.DEFAULT_MARKDOWN_TEMPLATE)
           .build();
+  private final UserConfigurationField enableReadme =
+      UserConfigurationField.builder()
+          .description("""
+              README.md 파일을 생성할지 여부를 결정합니다.
+              """)
+          .defaultValue("true")
+          .build();
 
   public static UserConfiguration defaultConfiguration() {
     return new UserConfiguration();
@@ -41,11 +48,13 @@ public class UserConfiguration {
    */
   void printValue() {
     log.info("""
-        설정 정보를 출력합니다.
-        srcDirPrefix : {}
-        srcCommentFormat : {}
-        mainCodeTemplate : {}
-        """, srcDirPrefix.getValue(), mainCodeTemplate.getValue(), markdownTemplate.getValue());
+            설정 정보를 출력합니다.
+            srcDirPrefix : {}
+            srcCommentFormat : {}
+            mainCodeTemplate : {}
+            enableReadme : {}
+            """, srcDirPrefix.getValue(), mainCodeTemplate.getValue(), markdownTemplate.getValue(),
+        enableReadme.getValue());
   }
 
   protected UserConfiguration() {
@@ -55,5 +64,9 @@ public class UserConfiguration {
     this.srcDirPrefix.setValue(userConfiguration.srcDirPrefix.getValue());
     this.mainCodeTemplate.setValue(userConfiguration.mainCodeTemplate.getValue());
     this.markdownTemplate.setValue(userConfiguration.markdownTemplate.getValue());
+  }
+
+  public boolean enableReadme() {
+    return enableReadme.getValue().equals("true");
   }
 }

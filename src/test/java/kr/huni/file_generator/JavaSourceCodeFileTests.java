@@ -32,7 +32,7 @@ class JavaSourceCodeFileTests {
     String overWrittenSourceCode = "over written source code";
 
     JavaSourceCodeFile javaSourceCodeFile = new JavaSourceCodeFile();
-    javaSourceCodeFile.write(sourceRootDirectory, fileName, overWrittenSourceCode, "# Test");
+    javaSourceCodeFile.write(sourceRootDirectory, fileName, overWrittenSourceCode, "", false);
     File srcDir = new File(sourceRootDirectory, "src");
 
     // when

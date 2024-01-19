@@ -8,7 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 public class JavaSourceCodeFile implements SourceCodeFile {
 
   @Override
-  public void write(String sourceRootDirectory, String sourceCode, String testCode, String readme)
+  public void write(String sourceRootDirectory, String sourceCode, String testCode, String readme,
+      boolean enableReadme)
       throws IOException {
     File srcDir = new File(sourceRootDirectory, "src");
 
@@ -20,8 +21,10 @@ public class JavaSourceCodeFile implements SourceCodeFile {
     writeToFile(srcDir, "TestHelper.java", testCode);
     log.info("소스코드 파일 생성 완료");
 
-    writeToFile(srcDir, "README.md", readme);
-    log.info("README.md 파일 생성 완료");
+    if (enableReadme) {
+      writeToFile(srcDir, "README.md", readme);
+      log.info("README.md 파일 생성 완료");
+    }
   }
 
 

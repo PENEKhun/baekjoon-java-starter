@@ -25,7 +25,8 @@ public interface SourceCodeFile {
    * @implSpec 해당 메서드안에서 필요한 하위 폴더를 생성하고, {@link #writeToFile(File, String, String)}를 통해 알고리즘을 구현할
    * 소스코드 파일과 테스트 코드 파일을 생성해야합니다.
    */
-  void write(String directory, String sourceCode, String testCode, String readme)
+  void write(String directory, String sourceCode, String testCode, String readme,
+      boolean enableReadme)
       throws IOException;
 
   /**
@@ -81,5 +82,4 @@ public interface SourceCodeFile {
     }
     return sourceCode.toString();
   }
-
 }

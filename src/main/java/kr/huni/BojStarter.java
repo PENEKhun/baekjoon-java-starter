@@ -8,6 +8,7 @@ import kr.huni.file_generator.JavaSourceCodeFile;
 import kr.huni.os.OperatingSystem;
 import kr.huni.problem_parser.BaekjoonProblemParser;
 import kr.huni.problem_parser.Problem;
+import kr.huni.user_configuration.UserConfigurationLoader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,7 +50,8 @@ public class BojStarter {
   private void createSrcFile(Problem problem, GeneratedCode generatedCode) {
     try {
       fileUtil.write(problem.getSourceRootDirectory(), generatedCode.mainCode(),
-          generatedCode.testCode(), codeGenerator.generateMarkdown(problem));
+          generatedCode.testCode(), codeGenerator.generateMarkdown(problem),
+          UserConfigurationLoader.getInstance().enableReadme());
     } catch (IOException e) {
       log.error("소스코드 파일 또는 디렉토리 생성에 실패했습니다.", e);
     }
