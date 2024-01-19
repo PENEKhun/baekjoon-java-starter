@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import kr.huni.TestCleaner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,11 +19,8 @@ import org.junit.jupiter.api.Test;
 class UserConfigurationLoaderTest {
 
   @BeforeEach
-  void setUp() {
-    File file = new File(CONFIGURATION_FILE_NAME);
-    if (file.exists()) {
-      file.delete();
-    }
+  void setUp() throws IOException, NoSuchFieldException, IllegalAccessException {
+    TestCleaner.clean();
   }
 
   @Test
