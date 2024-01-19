@@ -22,7 +22,7 @@ class UserConfigurationTest {
             UserConfiguration.defaultConfiguration().srcDirPrefix.getValue()),
         () -> Assertions.assertSame(defaultConfiguration.markdownTemplate.getDefaultValue(),
             UserConfiguration.defaultConfiguration().markdownTemplate.getValue()),
-        () -> Assertions.assertSame(defaultConfiguration.enableReadme(), true)
+        () -> Assertions.assertSame(true, defaultConfiguration.enableReadme())
     );
   }
 
