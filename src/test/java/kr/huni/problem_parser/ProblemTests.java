@@ -13,7 +13,8 @@ class ProblemTests {
   void problem_dir_prefix_test() {
     // given & when
     int problemId = 1000;
-    Problem problem = new Problem(problemId, "A+B", null);
+    Problem problem = new Problem(problemId, "A+B", "두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.",
+        null);
     String srcDirPrefix = UserConfigurationLoader.getInstance().srcDirPrefix.getValue();
     String expected = srcDirPrefix + problemId;
 

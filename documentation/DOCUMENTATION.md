@@ -9,7 +9,7 @@
 
 ### 생성되는 소스코드 폴더명 변경하기
 
-config.json의 `srcDirPrefix.value`을 수정하여, 생성되는 소스코드 폴더명의 prefix를 변경할 수 있습니다.
+`config.json`의 `srcDirPrefix.value`을 수정하여, 생성되는 소스코드 폴더명의 `prefix`를 변경할 수 있습니다.
 예시로 1000번 문제에서 `srcDirPrefix.value`을 `BOJ_`로 설정하면, `BOJ_1000` 폴더가 생성됩니다. 기본 설정 값은 `p`입니다.
 
 ```json
@@ -42,7 +42,7 @@ config.json의 `srcDirPrefix.value`을 수정하여, 생성되는 소스코드 �
 import java.util.Scanner;
     
 /*
-  BAEKJOON {{number}} {{title}}
+  BAEKJOON {{number}}번 {{title}}
   https://www.acmicpc.net/problem/{{number}}
 */
 
@@ -92,5 +92,45 @@ public class Main {
     bw.close();
     br.close();
   }
+}
+```
+
+### 생성되는 README.md 파일의 템플릿 변경하기
+
+`config.json`의 `markdownTemplate.value`을 수정하여, 생성되는 `README.md`의 파일 내용을 변경할 수 있습니다.  
+기본 설정 값은 아래와 같습니다.
+
+```markdown
+# {{title}}
+
+> 문제 번호 : {{number}} <br/>
+> 출처 : {{url}}
+
+## 문제 설명
+
+{{description}}
+```
+
+#### 예악어
+
+해당 기능에선 네가지 예약어를 지원합니다.
+
+- `{{title}}`: 문제 제목
+- `{{number}}`: 문제 번호
+- `{{url}}`: 문제 출처 URL
+- `{{description}}`: 문제 설명 *(html 태그 포함)*
+
+#### 비활성화 방법
+
+`config.json`의 `enableReadme.value`를 `"true"` 대신 `"false"`로 수정하면, README.md 파일이 생성되지 않습니다. boolean
+형태가 아닌 `"`로 감싸진 문자열로 입력해야 합니다.
+
+```json
+{
+  ...
+  "enableReadme": {
+    "value": "false"
+  },
+  ...
 }
 ```

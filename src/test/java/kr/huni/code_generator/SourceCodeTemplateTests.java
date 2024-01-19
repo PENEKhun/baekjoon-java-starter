@@ -16,7 +16,7 @@ class SourceCodeTemplateTests {
   @DisplayName("생성되는 기본 Main.java 기본 템플릿은 문법적으로 오류가 없다.")
   void main_syntax_fine() throws IOException {
     // given
-    SourceCodeTemplateImpl sourceCodeTemplate = new SourceCodeTemplateImpl();
+    JavaTemplate sourceCodeTemplate = new JavaTemplate();
     String mainSourceCode = sourceCodeTemplate.getMainCode(1000, "A+B");
 
     // when
@@ -33,7 +33,7 @@ class SourceCodeTemplateTests {
     ArrayList<TestCase> testCases = new ArrayList<>();
     testCases.add(new TestCase("1 2", "3"));
 
-    SourceCodeTemplateImpl sourceCodeTemplate = new SourceCodeTemplateImpl();
+    JavaTemplate sourceCodeTemplate = new JavaTemplate();
     String testCode = sourceCodeTemplate.getTestCode(testCases);
     testCode += """
             class Main {
@@ -54,7 +54,7 @@ class SourceCodeTemplateTests {
   @DisplayName("테스트 케이스가 없을때 생성된 NoTestHelper.java는 문법적으로 오류가 없다.")
   void test_syntax_fine_with_no_case() throws IOException {
     // given
-    SourceCodeTemplateImpl sourceCodeTemplate = new SourceCodeTemplateImpl();
+    JavaTemplate sourceCodeTemplate = new JavaTemplate();
     String testCode = sourceCodeTemplate.getTestCode(new ArrayList<>());
 
     // when
@@ -68,7 +68,7 @@ class SourceCodeTemplateTests {
   @DisplayName("테스트케이스가 없을때 생성된 NoTestHelper.java 는 고정된 코드 문자를 반환한다.")
   void noTestHelper_load_well() throws IOException {
     // given
-    SourceCodeTemplateImpl sourceCodeTemplate = new SourceCodeTemplateImpl();
+    JavaTemplate sourceCodeTemplate = new JavaTemplate();
     String noTestHelperCode = sourceCodeTemplate.getTestCode(new ArrayList<>());
 
     // when & then
@@ -89,8 +89,8 @@ class SourceCodeTemplateTests {
   @DisplayName("TestHelper.java 코드 템플릿에 치환 문자가 존재 한다.")
   void test_replace_text_exist() throws IOException {
     // given
-    String codePath = SourceCodeTemplateImpl.TEST_JAVA_FILE;
-    String replacedTestCaseSymbol = SourceCodeTemplateImpl.REPLACED_TEST_CASES;
+    String codePath = JavaTemplate.TEST_JAVA_FILE;
+    String replacedTestCaseSymbol = JavaTemplate.REPLACED_TEST_CASES;
 
     // when
     String sourceCode = SourceCodeFile.readFileFromResource(codePath);

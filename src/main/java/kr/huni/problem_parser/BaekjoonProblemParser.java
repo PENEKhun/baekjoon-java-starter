@@ -7,10 +7,11 @@ import java.util.ArrayList;
  */
 public class BaekjoonProblemParser {
 
-  static final String PROBLEM_URL = "https://www.acmicpc.net/problem/";
+  public static final String PROBLEM_URL = "https://www.acmicpc.net/problem/";
   static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
       + "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
   static final String PROBLEM_TITLE_SELECTOR = "span#problem_title";
+  static final String PROBLEM_DESCRIPTION_SELECTOR = "div#problem_description";
   static final String PROBLEM_INPUT_SELECTOR = "pre[id^=sample-input]";
   static final String PROBLEM_OUTPUT_SELECTOR = "pre[id^=sample-output]";
   private final WebParser webParser;
@@ -31,18 +32,24 @@ public class BaekjoonProblemParser {
    * @return Problem 객체
    */
   public Problem parse(int problemNumber) {
-    String title = webParser.parse(PROBLEM_TITLE_SELECTOR)[0];
+    String title = webParser.parse(PROBLEM_TITLE_SELECTOR, false)[0];
+    String description = webParser.parse(PROBLEM_DESCRIPTION_SELECTOR, true)[0];
     final ArrayList<TestCase> testCases = new ArrayList<>();
 
-    String[] inputs = webParser.parse(PROBLEM_INPUT_SELECTOR);
-    String[] outputs = webParser.parse(PROBLEM_OUTPUT_SELECTOR);
+    String[] inputs = webParser.parse(PROBLEM_INPUT_SELECTOR, false);
+    String[] outputs = webParser.parse(PROBLEM_OUTPUT_SELECTOR, false);
 
     assert inputs.length == outputs.length;
     for (int i = 0; i < inputs.length; i++) {
       testCases.add(new TestCase(inputs[i], outputs[i]));
     }
 
-    return new Problem(problemNumber, title, testCases);
+    return Problem.builder()
+        .title(title)
+        .description(description)
+        .number(problemNumber)
+        .testCases(testCases)
+        .build();
   }
 
 }

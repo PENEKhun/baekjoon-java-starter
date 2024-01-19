@@ -1,5 +1,7 @@
 package kr.huni.code_generator;
 
+import static kr.huni.problem_parser.BaekjoonProblemParser.PROBLEM_URL;
+
 import java.io.IOException;
 import java.util.List;
 import kr.huni.file_generator.SourceCodeFile;
@@ -7,7 +9,7 @@ import kr.huni.problem_parser.TestCase;
 import kr.huni.user_configuration.UserConfigurationField;
 import kr.huni.user_configuration.UserConfigurationLoader;
 
-public class SourceCodeTemplateImpl implements SourceCodeTemplate {
+public class JavaTemplate implements FileContentTemplate {
 
   public String getMainCode(int number, String title) {
     String template = DEFAULT_MAIN_CODE_TEMPLATE;
@@ -46,5 +48,23 @@ public class SourceCodeTemplateImpl implements SourceCodeTemplate {
 
     String template = SourceCodeFile.readFileFromResource(TEST_JAVA_FILE);
     return template.replace(REPLACED_TEST_CASES, testCaseCode.toString());
+  }
+
+  @Override
+  public String getMarkdownContent(int number, String title, String description) {
+    String template = DEFAULT_MARKDOWN_TEMPLATE;
+    UserConfigurationField markdownTemplate =
+        UserConfigurationLoader.getInstance().markdownTemplate;
+    boolean useCustomTemplate = markdownTemplate.getValue() != null;
+
+    if (useCustomTemplate) {
+      template = markdownTemplate.getValue();
+    }
+
+    return template
+        .replace(REPLACED_NUMBER, String.valueOf(number))
+        .replace(REPLACED_TITLE, title)
+        .replace(REPLACED_DESCRIPTION, description)
+        .replace(REPLACED_URL, PROBLEM_URL + number);
   }
 }
