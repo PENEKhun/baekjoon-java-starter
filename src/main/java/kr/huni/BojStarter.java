@@ -42,7 +42,7 @@ public class BojStarter {
           IntelliJ IDEA의 idea 명령어가 설치되어 있지 않습니다.
           직접 IntelliJ IDEA를 실행해서 프로젝트를 열어주세요.
           생성된 프로젝트 경로 : {}
-          %n
+          상세 오류 :
           """, problem.getSourceRootDirectory(), e);
     }
   }

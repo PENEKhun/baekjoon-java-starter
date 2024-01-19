@@ -60,12 +60,6 @@ public class UserConfiguration {
   protected UserConfiguration() {
   }
 
-  public void merge(UserConfiguration userConfiguration) {
-    this.srcDirPrefix.setValue(userConfiguration.srcDirPrefix.getValue());
-    this.mainCodeTemplate.setValue(userConfiguration.mainCodeTemplate.getValue());
-    this.markdownTemplate.setValue(userConfiguration.markdownTemplate.getValue());
-  }
-
   public boolean enableReadme() {
     return enableReadme.getValue().equals("true");
   }

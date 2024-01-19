@@ -20,12 +20,12 @@ import org.junit.jupiter.api.Test;
 class IntegrationTests {
 
   @BeforeEach
-  void setUp() throws IOException {
+  void setUp() throws IOException, NoSuchFieldException, IllegalAccessException {
     TestCleaner.clean();
   }
 
   @AfterEach
-  void tearDown() throws IOException {
+  void tearDown() throws IOException, NoSuchFieldException, IllegalAccessException {
     TestCleaner.clean();
   }
 

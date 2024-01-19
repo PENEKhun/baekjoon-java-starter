@@ -37,7 +37,12 @@ public class UserConfigurationLoader {
         log.info("설정 파일을 읽어옵니다.");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        configuration.merge(objectMapper.readValue(configFile, UserConfiguration.class));
+        // read only exist field
+        configuration = objectMapper.readerForUpdating(configuration).readValue(configFile);
+
+        // and rewrite all fields
+        String jsonString = objectMapper.writeValueAsString(configuration);
+        writeStringToFile(jsonString);
       } else {
         log.info("설정 파일이 존재하지 않습니다. 설정 파일을 새로 생성합니다.");
         createDefaultConfigurationFile();

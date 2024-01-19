@@ -27,23 +27,6 @@ class UserConfigurationTest {
   }
 
   @Test
-  @DisplayName("merge() 메서드는 인자로 받은 Configuration 객체의 value 값을 병합한다.")
-  void merge() {
-    // given
-    UserConfiguration userConfiguration = UserConfiguration.defaultConfiguration();
-    UserConfiguration userConfiguration2 = UserConfiguration.defaultConfiguration();
-    userConfiguration.srcDirPrefix.setValue("1");
-    userConfiguration2.srcDirPrefix.setValue("2");
-
-    // when
-    userConfiguration.merge(userConfiguration2);
-
-    // then
-    Assertions.assertSame("2", userConfiguration.srcDirPrefix.getValue());
-
-  }
-
-  @Test
   @DisplayName("설정 객체에서 defaultValue는 직렬화 되지 않는다.")
   void defaultValue_json_ignore() throws JsonProcessingException {
     // given
