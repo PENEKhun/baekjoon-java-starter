@@ -1,23 +1,33 @@
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 이 테스트코드는 <a href="https://github.com/PENEKhun/Baekjoon-java-starter">Baekjoon-java-starter </a>를
- * 사용하여 생성되었습니다.
+ * 이 테스트코드는 <a href="https://github.com/PENEKhun/Baekjoon-java-starter">Baekjoon-java-starter </a>를 사용하여
+ * 생성되었습니다.
  *
  * @Author : PENEKhun
  */
 public class TestHelper {
 
+  private static final HashMap<Field, Object> initialStates = new HashMap<>();
+
   public static void main(String[] args) {
-    TestCase[] testCases = new TestCase[]{
+    captureInitialState();
+
+    TestCase[] testCases = new TestCase[] {
         // {{test_case}}
     };
 
     int passedCases = 0;
 
     for (int i = 0; i < testCases.length; i++) {
+      resetToInitialState();
       TestCase testCase = testCases[i];
 
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -51,6 +61,42 @@ public class TestHelper {
     System.out.println("테스트 완료 (" + passedCases + " / " + testCases.length + ")");
     if (passedCases == testCases.length) {
       System.out.println("주어진 케이스에 대해 잘 동작하고 있습니다.");
+    }
+  }
+
+  private static void captureInitialState() {
+    try {
+      Class<?> clazz = Main.class;
+      Field[] fields = clazz.getDeclaredFields();
+      for (Field field : fields) {
+        if (Modifier.isStatic(field.getModifiers())) {
+          field.setAccessible(true);
+          initialStates.put(field, field.get(null));
+        }
+      }
+    } catch (Exception e) {
+      System.out.println(red("Main 클래스에 접근할 수 없습니다."));
+    }
+  }
+
+  private static void resetToInitialState() {
+    try {
+      for (Map.Entry<Field, Object> entry : initialStates.entrySet()) {
+        Field field = entry.getKey();
+        field.setAccessible(true);
+        Object value = entry.getValue();
+        if (value instanceof Collection) {
+          ((Collection<?>) value).clear();
+        } else if (value instanceof Map) {
+          ((Map<?, ?>) value).clear();
+        } else if (value instanceof StringBuilder) {
+          ((StringBuilder) value).setLength(0);
+        } else {
+          field.set(null, value);
+        }
+      }
+    } catch (IllegalAccessException e) {
+      System.out.println(red("Main 클래스에 접근할 수 없습니다."));
     }
   }
 
