@@ -100,7 +100,7 @@ public class TestHelper {
     }
   }
 
-  public static void printFail(int caseNumber, TestCase testCase, String message) {
+  private static void printFail(int caseNumber, TestCase testCase, String message) {
     System.out.printf("""
         ====== %s ======
         [입력 값]
@@ -112,11 +112,11 @@ public class TestHelper {
     System.out.println(message);
   }
 
-  public static String red(String message) {
+  private static String red(String message) {
     return "\u001B[31m%s\u001B[0m".formatted(message);
   }
 
-  public static class TestCase {
+  private static class TestCase {
 
     public String input;
     public String expectedOutput;
