@@ -11,10 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 이 테스트코드는 <a href="https://github.com/PENEKhun/Baekjoon-java-starter">Baekjoon-java-starter </a>를 사용하여
+ * 이 테스트 코드는 <a href="https://github.com/PENEKhun/Baekjoon-java-starter">Baekjoon-java-starter</a>를 사용하여
  * 생성되었습니다.
  *
- * @Author : PENEKhun
+ * @author PENEKhun
  */
 public class TestHelper {
 
