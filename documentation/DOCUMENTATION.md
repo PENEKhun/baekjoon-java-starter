@@ -1,16 +1,22 @@
 # 사용 가이드
 
+이 가이드는 프로그램 설정을 사용자 맞춤형으로 조정하는 방법을 설명합니다.
+
 ## 설정 커스터 마이징
 
 ### 개요
 
-프로그램을 실행하면, jar 파일이 있는 경로에 `config.json`이 생성됩니다.  
-이 파일을 수정하여 설정을 커스터마이징 할 수 있습니다.
+프로그램 실행 시, `config.json` 파일이 jar 파일이 위치한 경로에 생성됩니다. 이 파일을 통해 다양한 설정을 커스터마이징할 수 있습니다.
 
-### 생성되는 소스코드 폴더명 변경하기
+### 소스코드 폴더명 변경
 
-`config.json`의 `srcDirPrefix.value`을 수정하여, 생성되는 소스코드 폴더명의 `prefix`를 변경할 수 있습니다.
-예시로 1000번 문제에서 `srcDirPrefix.value`을 `BOJ_`로 설정하면, `BOJ_1000` 폴더가 생성됩니다. 기본 설정 값은 `p`입니다.
+**경로:** config.json > srcDirPrefix.value
+
+**설명:** 생성되는 소스코드 폴더의 접두사를 변경합니다.
+
+**기본값:** `p`
+
+**예시:** srcDirPrefix.value를 BOJ_로 설정하면, 1000번 문제에 대해 BOJ_1000 폴더가 생성됩니다.
 
 ```json
 {
@@ -22,21 +28,13 @@
 }
 ```
 
-### 생성되는 Main.java 파일의 템플릿 변경하기
+### Main.java 템플릿 변경
 
-`config.json`의 `mainCodeTemplate.value`을 수정하여, 생성되는 Main.java 파일의 템플릿을 변경할 수 있습니다.
+**경로:** config.json > mainCodeTemplate.value
 
-```json
-{
-  ...
-  "mainCodeTemplate": {
-    "value": "import java.util.Scanner;\n\n/*\n    BAEKJOON {{number}} {{title}}\n    https://www.acmicpc.net/problem/{{number}}\n*/\n\npublic class Main {\n\n  public static void main(String[] args) {\n    Scanner scanner = new Scanner(System.in);\n    // 코드를 작성하세요.\n  }\n}\n"
-  },
-  ...
-}
-```
+**설명:** Main.java 파일 생성 시 사용되는 템플릿을 변경합니다.
 
-기본 설정 값은 아래와 같습니다.
+**기본 템플릿:**
 
 ```java
 import java.util.Scanner;
@@ -55,18 +53,16 @@ public class Main {
 }
 ```
 
-#### 예약어
-
-해당 기능에선 두가지 예약어를 지원합니다.
+#### 예약어 사용
 
 - `{{number}}`: 문제 번호
 - `{{title}}`: 문제 제목
 
-해당 설정 값에 위 두가지 예약어를 사용하면, 각각 실제 값으로 치환됩니다.
+#### 사용 팁
 
-#### 사용팁
+빠른 입출력이 필요한 경우, `BufferedReader`와 `BufferedWriter`를 사용하는 템플릿으로 수정할 수 있습니다.
 
-만약 빠른 입출력을 위해 `BufferedReader`와 `BufferedWriter`를 사용하고 싶다면, 아래와 같이 템플릿을 수정하면 됩니다.
+##### 예시 :
 
 ```java
 import java.io.BufferedReader;
@@ -87,20 +83,19 @@ public class Main {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     // 코드를 작성하세요.
-
-    bw.flush();
-    bw.close();
-    br.close();
   }
 }
 ```
 
-### 생성되는 README.md 파일의 템플릿 변경하기
+### README.md 템플릿 변경
 
-`config.json`의 `markdownTemplate.value`을 수정하여, 생성되는 `README.md`의 파일 내용을 변경할 수 있습니다.  
-기본 설정 값은 아래와 같습니다.
+**경로:** config.json > markdownTemplate.value
 
-```markdown
+**설명:** 생성되는 README.md 파일의 내용을 변경합니다.
+
+**기본 템플릿:**
+
+```
 # {{title}}
 
 > 문제 번호 : {{number}} <br/>
@@ -113,24 +108,15 @@ public class Main {
 
 #### 예악어
 
-해당 기능에선 네가지 예약어를 지원합니다.
-
 - `{{title}}`: 문제 제목
 - `{{number}}`: 문제 번호
 - `{{url}}`: 문제 출처 URL
 - `{{description}}`: 문제 설명 *(html 태그 포함)*
 
-#### 비활성화 방법
+#### README 생성 비활성화
 
-`config.json`의 `enableReadme.value`를 `"true"` 대신 `"false"`로 수정하면, README.md 파일이 생성되지 않습니다. boolean
-형태가 아닌 `"`로 감싸진 문자열로 입력해야 합니다.
+**경로:** config.json > enableReadme.value
 
-```json
-{
-  ...
-  "enableReadme": {
-    "value": "false"
-  },
-  ...
-}
-```
+**설명:** README.md 파일 생성을 비활성화합니다.
+
+**비활성화 방법:** 값을 `false`로 설정합니다. 꼭 `"`로 감싸진 문자열로 입력해야 합니다.  
