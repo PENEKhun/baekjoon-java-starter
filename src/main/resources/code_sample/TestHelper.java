@@ -47,9 +47,9 @@ public class TestHelper {
         e.printStackTrace();
       }
 
-      String output = outputStream.toString();
+      String output = outputStream.toString().stripTrailing();
       System.setOut(printOut);
-      if (output.equals(testCase.expectedOutput)) {
+      if (output.equals(testCase.expectedOutput.stripTrailing())) {
         passedCases++;
         continue;
       } else {
