@@ -29,7 +29,7 @@ public class JavaCodeGenerator implements FileContentGenerator {
   public String generateMarkdown(Problem problem) {
     JavaTemplate markdownTemplate = new JavaTemplate();
     return markdownTemplate.getMarkdownContent(problem.getNumber(), problem.getTitle(),
-        problem.getDescription());
+        problem.getDescription(), problem.getTimeLimit(), problem.getMemoryLimit());
   }
 
 }
