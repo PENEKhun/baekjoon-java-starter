@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,7 +71,6 @@ public class TestHelper {
       Class<?> clazz = Main.class;
       var clonedClass = clazz.getConstructor().newInstance();
       Field[] fields = clonedClass.getClass().getDeclaredFields();
-      System.out.println(Arrays.toString(fields));
 
       for (Field field : fields) {
         if (Modifier.isStatic(field.getModifiers())) {
