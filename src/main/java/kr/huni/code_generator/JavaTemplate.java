@@ -51,7 +51,7 @@ public class JavaTemplate implements FileContentTemplate {
   }
 
   @Override
-  public String getMarkdownContent(int number, String title, String description) {
+  public String getMarkdownContent(int number, String title, String description, int timeLimit, int memoryLimit) {
     String template = DEFAULT_MARKDOWN_TEMPLATE;
     UserConfigurationField markdownTemplate =
         UserConfigurationLoader.getInstance().markdownTemplate;
@@ -65,6 +65,8 @@ public class JavaTemplate implements FileContentTemplate {
         .replace(REPLACED_NUMBER, String.valueOf(number))
         .replace(REPLACED_TITLE, title)
         .replace(REPLACED_DESCRIPTION, description)
-        .replace(REPLACED_URL, PROBLEM_URL + number);
+        .replace(REPLACED_URL, PROBLEM_URL + number)
+        .replace(REPLACED_TIME_LIMIT, String.valueOf(timeLimit))
+        .replace(REPLACED_MEMORY_LIMIT, String.valueOf(memoryLimit));
   }
 }
