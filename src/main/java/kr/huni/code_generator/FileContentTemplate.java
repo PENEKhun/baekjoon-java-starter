@@ -40,7 +40,7 @@ public interface FileContentTemplate {
       
       | 메모리 제한 | 시간 제한 |
       |--------|-------|
-      | {{memory_limit}} MB | {{time_limit}} ms |
+      | {{memory_limit}} MB | {{time_limit}} 초 |
       
       ## 문제 설명
             
