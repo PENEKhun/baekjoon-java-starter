@@ -26,7 +26,7 @@ public class JavaTemplate implements FileContentTemplate {
         .replace(REPLACED_TITLE, title);
   }
 
-  public String getTestCode(List<TestCase> testCases) throws IOException {
+  public String getTestCode(List<TestCase> testCases, int timeLimit) throws IOException {
     if (testCases.isEmpty()) {
       return SourceCodeFile.readFileFromResource(NO_TEST_JAVA_FILE);
     }
@@ -47,11 +47,12 @@ public class JavaTemplate implements FileContentTemplate {
     }
 
     String template = SourceCodeFile.readFileFromResource(TEST_JAVA_FILE);
-    return template.replace(REPLACED_TEST_CASES, testCaseCode.toString());
+    return template.replace(REPLACED_TEST_CASES, testCaseCode.toString())
+        .replace(REPLACED_TIME_LIMIT, String.valueOf(timeLimit));
   }
 
   @Override
-  public String getMarkdownContent(int number, String title, String description) {
+  public String getMarkdownContent(int number, String title, String description, int timeLimit, int memoryLimit) {
     String template = DEFAULT_MARKDOWN_TEMPLATE;
     UserConfigurationField markdownTemplate =
         UserConfigurationLoader.getInstance().markdownTemplate;
@@ -65,6 +66,8 @@ public class JavaTemplate implements FileContentTemplate {
         .replace(REPLACED_NUMBER, String.valueOf(number))
         .replace(REPLACED_TITLE, title)
         .replace(REPLACED_DESCRIPTION, description)
-        .replace(REPLACED_URL, PROBLEM_URL + number);
+        .replace(REPLACED_URL, PROBLEM_URL + number)
+        .replace(REPLACED_TIME_LIMIT, String.valueOf(timeLimit))
+        .replace(REPLACED_MEMORY_LIMIT, String.valueOf(memoryLimit));
   }
 }

@@ -27,7 +27,7 @@ public class UserConfiguration {
   public final UserConfigurationField markdownTemplate =
       UserConfigurationField.builder()
           .description("""
-              문제 설명을 저장할 마크다운 파일의 템플릿입니다. 예악어 {{title}}, {{problem_number}}, {{description}}, {{source}}를 사용하면 문제제목, 문제번호, 문제설명, 출처로 자동 치환됩니다.
+              문제 설명을 저장할 마크다운 파일의 템플릿입니다. 예악어 {{title}}, {{problem_number}}, {{description}}, {{source}} 를 사용하면 문제제목, 문제번호, 문제설명, 출처로 자동 치환됩니다.
               """)
           .defaultValue(JavaTemplate.DEFAULT_MARKDOWN_TEMPLATE)
           .build();
