@@ -61,9 +61,10 @@ public interface FileContentTemplate {
    * TestHelper.java 소스코드 문자를 생성하고 반환합니다.
    *
    * @param testCases 테스트 케이스 목록
+   * @param timeLimit 문제에서 명시된 시간 제한
    * @return TestHelper.java 파일의 내용
    */
-  String getTestCode(List<TestCase> testCases) throws IOException;
+  String getTestCode(List<TestCase> testCases, int timeLimit) throws IOException;
 
   String getMarkdownContent(int number, String title, String description, int timeLimit, int memoryLimit);
 

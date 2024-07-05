@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * 이 테스트 코드는 <a href="https://github.com/PENEKhun/Baekjoon-java-starter">Baekjoon-java-starter</a>를 사용하여
@@ -18,6 +19,7 @@ import java.util.Map;
 public class TestHelper {
 
   private static final HashMap<Field, Object> initialStates = new HashMap<>();
+  private static final int timeLimit = {{time_limit}};
 
   public static void main(String[] args) {
     captureInitialState();
@@ -38,22 +40,35 @@ public class TestHelper {
       System.setOut(printStream);
       System.setIn(new ByteArrayInputStream(testCase.input.getBytes()));
 
+      ExecutorService executor = Executors.newSingleThreadExecutor();
+      final int problemNumber = i + 1;
+      Future<?> future = executor.submit(() -> Main.main(new String[0]));
+
+      boolean timeout = false;
       try {
-        Main.main(new String[0]);
-      } catch (Exception e) {
+        future.get(timeLimit, TimeUnit.SECONDS);
+      } catch(TimeoutException e) {
+        future.cancel(true);
+        timeout = true;
+      } catch(Exception e) {
+        future.cancel(true);
         System.setOut(printOut);
-        printFail(i + 1, testCase, "Exception 발생");
+        printFail(problemNumber, testCase, "Exception 발생");
         e.printStackTrace();
+      } finally {
+        executor.shutdown();
       }
 
       String output = outputStream.toString().stripTrailing();
       System.setOut(printOut);
       if (output.equals(testCase.expectedOutput.stripTrailing())) {
         passedCases++;
-        continue;
+      } else if (timeout) {
+        printFail(problemNumber, testCase, red("사유 : 시간 초과"));
       } else {
-        printFail(i + 1, testCase,
+        printFail(problemNumber, testCase,
             red("""
+                출력 값이 기대한 값과 다릅니다.
                 [실제 값]
                 %s
                 """.formatted(output)));

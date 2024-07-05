@@ -16,7 +16,7 @@ public class JavaCodeGenerator implements FileContentGenerator {
     try {
       JavaTemplate sourceCodeTemplate = new JavaTemplate();
       String mainCode = sourceCodeTemplate.getMainCode(problem.getNumber(), problem.getTitle());
-      String testCode = sourceCodeTemplate.getTestCode(problem.getTestCases());
+      String testCode = sourceCodeTemplate.getTestCode(problem.getTestCases(), 2);
 
       return new GeneratedCode(mainCode, testCode);
     } catch (IOException e) {

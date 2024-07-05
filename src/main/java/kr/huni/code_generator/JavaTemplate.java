@@ -26,7 +26,7 @@ public class JavaTemplate implements FileContentTemplate {
         .replace(REPLACED_TITLE, title);
   }
 
-  public String getTestCode(List<TestCase> testCases) throws IOException {
+  public String getTestCode(List<TestCase> testCases, int timeLimit) throws IOException {
     if (testCases.isEmpty()) {
       return SourceCodeFile.readFileFromResource(NO_TEST_JAVA_FILE);
     }
@@ -47,7 +47,8 @@ public class JavaTemplate implements FileContentTemplate {
     }
 
     String template = SourceCodeFile.readFileFromResource(TEST_JAVA_FILE);
-    return template.replace(REPLACED_TEST_CASES, testCaseCode.toString());
+    return template.replace(REPLACED_TEST_CASES, testCaseCode.toString())
+        .replace(REPLACED_TIME_LIMIT, String.valueOf(timeLimit));
   }
 
   @Override
