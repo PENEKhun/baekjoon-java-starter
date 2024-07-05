@@ -34,7 +34,7 @@ class SourceCodeTemplateTests {
     testCases.add(new TestCase("1 2", "3"));
 
     JavaTemplate sourceCodeTemplate = new JavaTemplate();
-    String testCode = sourceCodeTemplate.getTestCode(testCases);
+    String testCode = sourceCodeTemplate.getTestCode(testCases, 2);
     testCode += """
             class Main {
               public static void main(String[] args) {
@@ -55,7 +55,7 @@ class SourceCodeTemplateTests {
   void test_syntax_fine_with_no_case() throws IOException {
     // given
     JavaTemplate sourceCodeTemplate = new JavaTemplate();
-    String testCode = sourceCodeTemplate.getTestCode(new ArrayList<>());
+    String testCode = sourceCodeTemplate.getTestCode(new ArrayList<>(), 2);
 
     // when
     boolean working = DynamicCodeCompileSupporter.checkCompileWorking(testCode, null);
@@ -69,7 +69,7 @@ class SourceCodeTemplateTests {
   void noTestHelper_load_well() throws IOException {
     // given
     JavaTemplate sourceCodeTemplate = new JavaTemplate();
-    String noTestHelperCode = sourceCodeTemplate.getTestCode(new ArrayList<>());
+    String noTestHelperCode = sourceCodeTemplate.getTestCode(new ArrayList<>(), 2);
 
     // when & then
     Assertions.assertEquals(
