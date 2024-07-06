@@ -116,8 +116,8 @@ public class Main {
 - `{{number}}`: 문제 번호
 - `{{url}}`: 문제 출처 URL
 - `{{description}}`: 문제 설명 *(html 태그 포함)*
-- `{{time_limit}}`: 시간 제한
-- `{{memory_limit}}`: 메모리 제한
+- `{{time_limit}}`: 시간 제한 *(단위 : 초)*
+- `{{memory_limit}}`: 메모리 제한 *(단위 : MB)*
 
 #### README 생성 비활성화
 
