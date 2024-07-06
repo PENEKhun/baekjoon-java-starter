@@ -110,7 +110,7 @@ public class Main {
 {{description}}
 ```
 
-#### 예악어
+#### 예약어
 
 - `{{title}}`: 문제 제목
 - `{{number}}`: 문제 번호
