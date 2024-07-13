@@ -1,9 +1,13 @@
 package kr.huni.Integration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import kr.huni.BojStarter;
 import kr.huni.TestCleaner;
 import kr.huni.code.runner.FakeCodeOpen;
@@ -30,20 +34,39 @@ class IntegrationTests {
   }
 
   @Test
-  @DisplayName("프로그램에서 Main.java 파일이 잘 생성된다.")
-  void applicationTest() {
+  @DisplayName("예상된 Main.java 파일의 내용이 생성된다.")
+  void mainJavaContent() throws IOException {
     // given
+    String expected = """
+        import java.util.Scanner;
+        
+        /*
+            BAEKJOON 1000번 A+B
+            https://www.acmicpc.net/problem/1000
+        */
+        
+        public class Main {
+        
+          public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            // 코드를 작성하세요.
+          }
+        }
+        """;
+
     BojStarter program = new BojStarter(
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
         new BaekjoonProblemParser(new JsoupWebParser(1000)));
-
-    // when
+    String path = "p1000/src/Main.java";
     program.run(1000);
 
+    // when
+    String generatedMain = Files.readString(Path.of(path));
+
     // then
-    assertTrue(new File("p1000/src/Main.java").exists());
+    assertEquals(expected, generatedMain);
   }
 
   @Test
