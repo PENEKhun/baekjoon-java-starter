@@ -37,7 +37,8 @@ class SourceCodeTemplateTests {
     String testCode = sourceCodeTemplate.getTestCode(testCases, 2);
     testCode += """
             class Main {
-              public static void main(String[] args) {
+              // Main Function have 'throws exception'
+              public static void main(String[] args) throws Exception {
                 // do nothing
               }
             }
