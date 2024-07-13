@@ -47,6 +47,23 @@ class IntegrationTests {
   }
 
   @Test
+  @DisplayName("프로그램에서 TestHelper.java 파일이 잘 생성된다.")
+  void testHelper() {
+    // given
+    BojStarter program = new BojStarter(
+        new FakeCodeOpen(),
+        new JavaSourceCodeFile(),
+        new JavaCodeGenerator(),
+        new BaekjoonProblemParser(new JsoupWebParser(1000)));
+
+    // when
+    program.run(1000);
+
+    // then
+    assertTrue(new File("p1000/src/TestHelper.java").exists());
+  }
+
+  @Test
   @DisplayName("프로그램에서 README.md 파일이 잘 생성된다.")
   void Readme_generate_well() {
     // given
