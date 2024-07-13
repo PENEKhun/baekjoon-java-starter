@@ -5,8 +5,12 @@ import static kr.huni.user_configuration.UserConfigurationLoader.CONFIGURATION_F
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import kr.huni.user_configuration.UserConfigurationLoader;
 
 public class TestCleaner {
@@ -18,13 +22,7 @@ public class TestCleaner {
     clearConfigurationFile();
 
     // 생성된 파일 삭제
-    Files.deleteIfExists(Path.of("p1000/src/Main.java"));
-    Files.deleteIfExists(Path.of("p1000/src/TestHelper.java"));
-    Files.deleteIfExists(Path.of("p1000/src/NoTestHelper.java"));
-    Files.deleteIfExists(Path.of("p1000/src/README.md"));
-    Files.deleteIfExists(Path.of("p1000/src"));
-    Files.deleteIfExists(Path.of("p1000"));
-
+    deleteDirectoryRecursively(Path.of("p1000"));
     assert !new File("p1000").exists();
   }
 
@@ -41,4 +39,21 @@ public class TestCleaner {
     instance.set(null, null);
   }
 
+  private static void deleteDirectoryRecursively(Path path) throws IOException {
+    if (Files.exists(path)) {
+      Files.walkFileTree(path, new SimpleFileVisitor<>() {
+        @Override
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+          Files.delete(file);
+          return FileVisitResult.CONTINUE;
+        }
+
+        @Override
+        public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+          Files.delete(dir);
+          return FileVisitResult.CONTINUE;
+        }
+      });
+    }
+  }
 }
