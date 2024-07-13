@@ -8,7 +8,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * 이 테스트 코드는 <a href="https://github.com/PENEKhun/Baekjoon-java-starter">Baekjoon-java-starter</a>를 사용하여
@@ -18,7 +23,7 @@ import java.util.concurrent.*;
  */
 public class TestHelper {
 
-  private static final HashMap<Field, Object> initialStates = new HashMap<>();
+  private static final Map<Field, byte[]> initialStates = new HashMap<>();
   private static final int timeLimit = {{time_limit}};
 
   public static void main(String[] args) {
@@ -28,75 +33,95 @@ public class TestHelper {
         // {{test_case}}
     };
 
+    int passedCases = runTestCases(testCases);
+
+    printSummary(passedCases, testCases.length);
+  }
+
+  private static int runTestCases(TestCase[] testCases) {
     int passedCases = 0;
 
     for (int i = 0; i < testCases.length; i++) {
       resetToInitialState();
-      TestCase testCase = testCases[i];
-
-      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-      PrintStream printStream = new PrintStream(outputStream);
-      PrintStream printOut = System.out;
-      System.setOut(printStream);
-      System.setIn(new ByteArrayInputStream(testCase.input.getBytes()));
-
-      ExecutorService executor = Executors.newSingleThreadExecutor();
-      final int problemNumber = i + 1;
-      Future<?> future = executor.submit(() -> Main.main(new String[0]));
-
-      boolean timeout = false;
-      try {
-        future.get(timeLimit, TimeUnit.SECONDS);
-      } catch(TimeoutException e) {
-        future.cancel(true);
-        timeout = true;
-      } catch(Exception e) {
-        future.cancel(true);
-        System.setOut(printOut);
-        printFail(problemNumber, testCase, "Exception 발생");
-        e.printStackTrace();
-      } finally {
-        executor.shutdown();
-      }
-
-      String output = outputStream.toString().stripTrailing();
-      System.setOut(printOut);
-      if (output.equals(testCase.expectedOutput.stripTrailing())) {
+      if (runSingleTestCase(testCases[i], i + 1)) {
         passedCases++;
-      } else if (timeout) {
-        printFail(problemNumber, testCase, red("사유 : 시간 초과"));
-      } else {
-        printFail(problemNumber, testCase,
-            red("""
-                출력 값이 기대한 값과 다릅니다.
-                [실제 값]
-                %s
-                """.formatted(output)));
       }
     }
 
-    System.out.println("테스트 완료 (" + passedCases + " / " + testCases.length + ")");
-    if (passedCases == testCases.length) {
-      System.out.println("주어진 케이스에 대해 잘 동작하고 있습니다.");
+    return passedCases;
+  }
+
+  private static boolean runSingleTestCase(TestCase testCase, int caseNumber) {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    PrintStream originalOut = System.out;
+    setupStreams(testCase.input, outputStream);
+
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    Future<?> future = submitTask(executor);
+
+    boolean testCaseException = false;
+    try {
+      future.get(timeLimit, TimeUnit.SECONDS);
+    } catch (TimeoutException e) {
+      handleException(originalOut, caseNumber, testCase, "시간 초과 발생", e);
+      testCaseException = true;
+    } catch (InterruptedException | ExecutionException e) {
+      handleException(originalOut, caseNumber, testCase, "Main() Exception 발생", e);
+      testCaseException = true;
+    } finally {
+      executor.shutdown();
     }
+
+    if (!testCaseException) {
+      return compareOutput(testCase, caseNumber, outputStream.toString(), originalOut);
+    }
+
+    return false;
+  }
+
+  private static Future<?> submitTask(ExecutorService executor) {
+    return executor.submit(() -> {
+      try {
+        Main.main(new String[0]);
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
+    });
+  }
+
+  private static void setupStreams(String input, ByteArrayOutputStream outputStream) {
+    System.setOut(new PrintStream(outputStream));
+    System.setIn(new ByteArrayInputStream(input.getBytes()));
+  }
+
+  private static boolean compareOutput(TestCase testCase, int caseNumber, String output, PrintStream originalOut) {
+    System.setOut(originalOut);
+    String strippedOutput = output.stripTrailing();
+    String expectedOutput = testCase.expectedOutput.stripTrailing();
+
+    if (strippedOutput.equals(expectedOutput)) {
+      return true;
+    } else {
+      printFail(caseNumber, testCase, red("[실제 값]\n%s\n\n출력 값이 기대한 값과 다릅니다.").formatted(strippedOutput));
+      return false;
+    }
+  }
+
+  private static void handleException(PrintStream originalOut, int caseNumber, TestCase testCase, String message, Exception e) {
+    System.setOut(originalOut);
+    printFail(caseNumber, testCase, message);
+    e.printStackTrace(originalOut);
   }
 
   private static void captureInitialState() {
     try {
-      Class<?> clazz = Main.class;
-      var clonedClass = clazz.getConstructor().newInstance();
-      Field[] fields = clonedClass.getClass().getDeclaredFields();
-
+      Field[] fields = Main.class.getDeclaredFields();
       for (Field field : fields) {
         if (Modifier.isStatic(field.getModifiers())) {
           field.setAccessible(true);
           Object fieldValue = field.get(null);
-          try {
-            byte[] serializedField = SerializationUtils.serialize(fieldValue);
-            initialStates.put(field, serializedField);
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
+          byte[] serializedField = SerializationUtils.serialize(fieldValue);
+          initialStates.put(field, serializedField);
         }
       }
     } catch (Exception e) {
@@ -106,43 +131,47 @@ public class TestHelper {
 
   private static void resetToInitialState() {
     try {
-      for (Map.Entry<Field, Object> entry : initialStates.entrySet()) {
+      for (Map.Entry<Field, byte[]> entry : initialStates.entrySet()) {
         Field field = entry.getKey();
-        byte[] serializedState = (byte[]) entry.getValue();
-        try {
-          Object originalState = SerializationUtils.deserialize(serializedState);
-          field.setAccessible(true);
-          field.set(null, originalState);
-        } catch (IOException | ClassNotFoundException e) {
-          e.printStackTrace(); // Or handle more gracefully
-        }
+        Object originalState = SerializationUtils.deserialize(entry.getValue());
+        field.setAccessible(true);
+        field.set(null, originalState);
       }
-
-    } catch (IllegalAccessException e) {
+    } catch (Exception e) {
       System.out.println(red("Main 클래스에 접근할 수 없습니다."));
     }
   }
 
   private static void printFail(int caseNumber, TestCase testCase, String message) {
     System.out.printf("""
-        ====== %s ======
-        [입력 값]
-        %s
-        [기대 값]
-        %s
-        """, red(caseNumber + " 번째 케이스 실패"), testCase.input, testCase.expectedOutput);
+            ====== %s ======
+            [입력 값]
+            %s
+            [기대 값]
+            %s
+            """, red(caseNumber + " 번째 케이스 실패"), testCase.input, testCase.expectedOutput);
+    System.out.println(green(message));
+  }
 
-    System.out.println(message);
+  private static void printSummary(int passedCases, int totalCases) {
+    System.out.println("===============");
+    System.out.println("테스트 완료 (" + passedCases + " / " + totalCases + ")");
+    if (passedCases == totalCases) {
+      System.out.println("주어진 케이스에 대해 잘 동작하고 있습니다.");
+    }
   }
 
   private static String red(String message) {
-    return "\u001B[31m%s\u001B[0m".formatted(message);
+    return String.format("\u001B[31m%s\u001B[0m", message);
+  }
+
+  private static String green(String message) {
+    return String.format("\u001B[32m%s\u001B[0m", message);
   }
 
   private static class TestCase {
-
-    public String input;
-    public String expectedOutput;
+    public final String input;
+    public final String expectedOutput;
 
     public TestCase(String input, String expectedOutput) {
       this.input = input;
@@ -151,7 +180,6 @@ public class TestHelper {
   }
 
   public static class SerializationUtils {
-
     public static byte[] serialize(Object obj) throws IOException {
       try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
           ObjectOutputStream oos = new ObjectOutputStream(bos)) {
