@@ -96,15 +96,30 @@ public class TestHelper {
 
   private static boolean compareOutput(TestCase testCase, int caseNumber, String output, PrintStream originalOut) {
     System.setOut(originalOut);
-    String strippedOutput = output.stripTrailing();
+    String actualOutput = removeTrailingSpaces(output);
     String expectedOutput = testCase.expectedOutput.stripTrailing();
 
-    if (strippedOutput.equals(expectedOutput)) {
+    if (actualOutput.equals(expectedOutput)) {
       return true;
     } else {
-      printFail(caseNumber, testCase, red("[실제 값]\n%s\n\n출력 값이 기대한 값과 다릅니다.").formatted(strippedOutput));
+      printFail(caseNumber, testCase, red("[실제 값]\n%s\n\n출력 값이 기대한 값과 다릅니다.").formatted(actualOutput));
       return false;
     }
+  }
+
+  private static String removeTrailingSpaces(String input) {
+    String[] lines = input.split("\n");
+    StringBuilder result = new StringBuilder();
+
+    for (String line : lines) {
+      result.append(line.stripTrailing()).append("\n");
+    }
+
+    if (!result.isEmpty()) {
+      result.setLength(result.length() - 1);
+    }
+
+    return result.toString();
   }
 
   private static void handleException(PrintStream originalOut, int caseNumber, TestCase testCase, String message, Exception e) {

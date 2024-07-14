@@ -162,6 +162,37 @@ class IntegrationTests {
   }
 
   @Test
+  @DisplayName("매 라인 끝에 의미없는 공백이 있어도 정답으로 인정된다")
+  void baekjoonOutputFormat() throws IOException, InterruptedException {
+    // given
+    BojStarter program = new BojStarter(
+        new FakeCodeOpen(),
+        new JavaSourceCodeFile(),
+        new JavaCodeGenerator(),
+        new BaekjoonProblemParser(new JsoupWebParser(2438)));
+    program.run(2438);
+
+    String testCode = Files.readString(Path.of("p2438/src/TestHelper.java"));
+    String solution = """
+        public class Main {
+          public static void main(String[] args) {
+            System.out.println("*       ");
+            System.out.println("**  ");
+            System.out.println("***  ");
+            System.out.println("****  ");
+            System.out.println("*****  ");
+          }
+        }
+        """;
+
+    // when & then
+    assertTrue(DynamicCodeCompileSupporter.testRunWell(solution, testCode, """
+        ===============
+        테스트 완료 (1 / 1)
+        주어진 케이스에 대해 잘 동작하고 있습니다."""));
+  }
+
+  @Test
   @DisplayName("틀린 솔루션에 대한 테스트헬퍼 실행 검증")
   void testHelperWrongSolutionTest() throws IOException, InterruptedException {
     // given

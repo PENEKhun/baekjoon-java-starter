@@ -24,6 +24,9 @@ public class TestCleaner {
     // 생성된 파일 삭제
     deleteDirectoryRecursively(Path.of("p1000"));
     assert !new File("p1000").exists();
+
+    deleteDirectoryRecursively(Path.of("p2438"));
+    assert !new File("p2438").exists();
   }
 
   private static void clearConfigurationFile()
