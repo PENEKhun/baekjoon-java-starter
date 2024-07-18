@@ -148,9 +148,11 @@ public class TestHelper {
     try {
       for (Map.Entry<Field, byte[]> entry : initialStates.entrySet()) {
         Field field = entry.getKey();
-        Object originalState = SerializationUtils.deserialize(entry.getValue());
-        field.setAccessible(true);
-        field.set(null, originalState);
+        if (!Modifier.isFinal(field.getModifiers())) { // final 변수가 아닌 경우에만 초기화
+          Object originalState = SerializationUtils.deserialize(entry.getValue());
+          field.setAccessible(true);
+          field.set(null, originalState);
+        }
       }
     } catch (Exception e) {
       System.out.println(red("Main 클래스에 접근할 수 없습니다."));

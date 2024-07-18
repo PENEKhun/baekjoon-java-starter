@@ -27,6 +27,9 @@ public class TestCleaner {
 
     deleteDirectoryRecursively(Path.of("p2438"));
     assert !new File("p2438").exists();
+
+    deleteDirectoryRecursively(Path.of("p15686"));
+    assert !new File("p15686").exists();
   }
 
   private static void clearConfigurationFile()
