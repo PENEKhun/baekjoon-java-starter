@@ -41,3 +41,6 @@ bin/
 ### Exclude Test Output ###
 ./p*/
 config.json
+
+### Version Information ###
+/src/main/java/version/*
