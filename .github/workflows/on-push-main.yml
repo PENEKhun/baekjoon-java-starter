@@ -1,4 +1,4 @@
-name: Test, Build, Deploy
+name: Test, Build
 
 on:
   push:
@@ -23,41 +23,3 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build
-
-      - name: Zip JAR file
-        run: zip -r -j Baekjoon-java-starter.zip build/libs/*.jar
-
-      - name: Extract version from commit message
-        id: extract_version_name
-        run: |
-          VERSION_REGEX="[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9]+)?"
-          if [[ "${{ github.event.head_commit.message }}" =~ $VERSION_REGEX ]]; then
-            VERSION="${BASH_REMATCH[0]}"
-            echo "Version found: $VERSION"
-            echo "::set-output name=version::$VERSION"
-          else
-            echo "No version found in commit message."
-            exit 1
-          fi
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.PENEKHUN_GITHUB_SECRET }}
-        with:
-          tag_name: ${{ steps.extract_version_name.outputs.version }}
-          release_name: Release ${{ steps.extract_version_name.outputs.version }}
-          draft: false
-          prerelease: false
-
-      - name: Upload ZIP to release
-        id: upload_release_asset
-        uses: sekwah41/upload-release-assets@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.PENEKHUN_GITHUB_SECRET }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./Baekjoon-java-starter.zip
-          asset_name: Baekjoon-java-starter.zip
-          asset_content_type: application/zip

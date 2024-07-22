@@ -3,7 +3,15 @@ plugins {
 }
 
 group = 'kr.huni'
-version = '0.2.3-PRERELEASE'
+version = '0.0.0'
+
+build {
+    if (project.hasProperty('projVersion')) {
+        project.version = project.projVersion
+    } else if (project.hasProperty('deployMode')) {
+        throw new IllegalAccessException("deployMode must be set projVersion.")
+    }
+}
 
 jar {
     archiveFileName = "Baekjoon-java-starter.jar"
