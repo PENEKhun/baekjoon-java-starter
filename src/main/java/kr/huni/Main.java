@@ -25,7 +25,7 @@ public class Main {
         new IdeaCodeOpenManager(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser(problemNumber))
+        new BaekjoonProblemParser(new JsoupWebParser())
     );
     bojStarter.run(problemNumber);
     scanner.close();

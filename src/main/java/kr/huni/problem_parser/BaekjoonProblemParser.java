@@ -27,12 +27,13 @@ public class BaekjoonProblemParser {
   }
 
   /**
-   * 문제 번호를 받아 해당 문제를 파싱합니다.
+   * 문제를 파싱합니다.
    *
-   * @param problemNumber 백준 문제 번호
    * @return Problem 객체
    */
   public Problem parse(int problemNumber) {
+    webParser.setProblemNumber(problemNumber);
+
     String title = webParser.parse(PROBLEM_TITLE_SELECTOR, false)[0];
     String description = webParser.parse(PROBLEM_DESCRIPTION_SELECTOR, true)[0];
     String[] problemInformation = webParser.parse(PROBLEM_INFORMATION_SELECTOR, false)[0].split(" ");
@@ -57,5 +58,4 @@ public class BaekjoonProblemParser {
         .memoryLimit(memoryLimit)
         .build();
   }
-
 }

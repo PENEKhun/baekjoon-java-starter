@@ -60,9 +60,9 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser(1000)));
+        new BaekjoonProblemParser(new JsoupWebParser()));
     String path = "p1000/src/Main.java";
-    program.run(1000);
+    program.run(1_000);
 
     // when
     String generatedMain = Files.readString(Path.of(path));
@@ -79,10 +79,10 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser(1000)));
+        new BaekjoonProblemParser(new JsoupWebParser()));
 
     // when
-    program.run(1000);
+    program.run(1_000);
 
     // then
     assertTrue(new File("p1000/src/TestHelper.java").exists());
@@ -96,10 +96,10 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser(1000)));
+        new BaekjoonProblemParser(new JsoupWebParser()));
 
     // when
-    program.run(1000);
+    program.run(1_000);
 
     // then
     assertTrue(new File("p1000/src/README.md").exists());
@@ -113,8 +113,8 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser(1000)));
-    program.run(1000);
+        new BaekjoonProblemParser(new JsoupWebParser()));
+    program.run(1_000);
 
     String testCode = Files.readString(Path.of("p1000/src/TestHelper.java"));
     String solution = """
@@ -145,8 +145,8 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser(1000)));
-    program.run(1000);
+        new BaekjoonProblemParser(new JsoupWebParser()));
+    program.run(1_000);
 
     String testCode = Files.readString(Path.of("p1000/src/TestHelper.java"));
     String solution = """
@@ -169,8 +169,8 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser(2438)));
-    program.run(2438);
+        new BaekjoonProblemParser(new JsoupWebParser()));
+    program.run(2_438);
 
     String testCode = Files.readString(Path.of("p2438/src/TestHelper.java"));
     String solution = """
@@ -200,7 +200,7 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser(1000)));
+        new BaekjoonProblemParser(new JsoupWebParser()));
     program.run(1000);
 
     String testCode = Files.readString(Path.of("p1000/src/TestHelper.java"));
@@ -237,7 +237,7 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser(15_686)));
+        new BaekjoonProblemParser(new JsoupWebParser()));
     program.run(15_686);
 
     // when
