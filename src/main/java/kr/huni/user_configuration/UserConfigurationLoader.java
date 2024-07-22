@@ -52,7 +52,7 @@ public class UserConfigurationLoader {
       log.error(e.getMessage());
     }
 
-    configuration.printValue();
+//    configuration.printValue();
     return configuration;
   }
 
@@ -79,7 +79,7 @@ public class UserConfigurationLoader {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(
         UserConfigurationLoader.CONFIGURATION_FILE_NAME))) {
       writer.write(content);
-      log.info("JSON 문자열을 파일에 성공적으로 썼습니다.");
+//      log.info("JSON 문자열을 파일에 성공적으로 썼습니다.");
     } catch (IOException e) {
       log.error("파일에 JSON 문자열을 쓰는 도중 오류가 발생했습니다.");
       throw e;
