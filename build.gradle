@@ -3,7 +3,11 @@ plugins {
 }
 
 group = 'kr.huni'
-version = ''
+version = '0.2.3-PRERELEASE'
+
+jar {
+    archiveFileName = "Baekjoon-java-starter.jar"
+}
 
 repositories {
     mavenCentral()
@@ -48,3 +52,31 @@ jar {
 
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+task generateSources {
+    def outputDir = file("$buildDir/../src/main/java/version")
+    outputs.dir outputDir
+    doFirst {
+        if (!outputDir.exists()) {
+            outputDir.mkdirs()
+        }
+        def versionClassContent = """
+        package version;
+
+        public class CurrentVersion {
+            // This file is generated during the build process (build.gradle). Do not edit it manually!
+            private static final String CURRENT_VERSION = "$project.version";
+
+            public static String getCurrentVersion() {
+                return CURRENT_VERSION;
+            }
+        }
+        """
+        new File(outputDir, "CurrentVersion.java").withWriter('UTF-8') { writer ->
+            writer.write(versionClassContent)
+        }
+    }
+}
+
+compileJava.dependsOn generateSources
+compileJava.source generateSources.outputs.files, sourceSets.main.java

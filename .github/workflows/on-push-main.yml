@@ -27,8 +27,18 @@ jobs:
       - name: Zip JAR file
         run: zip -r -j Baekjoon-java-starter.zip build/libs/*.jar
 
-      - run: echo "##[set-output name=version;]$(echo '${{ github.event.head_commit.message }}' | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')"
+      - name: Extract version from commit message
         id: extract_version_name
+        run: |
+          VERSION_REGEX="[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9]+)?"
+          if [[ "${{ github.event.head_commit.message }}" =~ $VERSION_REGEX ]]; then
+            VERSION="${BASH_REMATCH[0]}"
+            echo "Version found: $VERSION"
+            echo "::set-output name=version::$VERSION"
+          else
+            echo "No version found in commit message."
+            exit 1
+          fi
 
       - name: Create Release
         id: create_release
