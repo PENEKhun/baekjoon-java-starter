@@ -24,7 +24,7 @@ import java.util.concurrent.TimeoutException;
 public class TestHelper {
 
   private static final Map<Field, byte[]> initialStates = new HashMap<>();
-  private static final int timeLimit = {{time_limit}};
+  private static final double timeLimit = {{time_limit}};
 
   public static void main(String[] args) {
     captureInitialState();
@@ -61,7 +61,7 @@ public class TestHelper {
 
     boolean testCaseException = false;
     try {
-      future.get(timeLimit, TimeUnit.SECONDS);
+      future.get((long)(timeLimit * 1000), TimeUnit.MILLISECONDS);
     } catch (TimeoutException e) {
       handleException(originalOut, caseNumber, testCase, "시간 초과 발생", e);
       testCaseException = true;

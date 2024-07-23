@@ -64,8 +64,8 @@ public interface FileContentTemplate {
    * @param timeLimit 문제에서 명시된 시간 제한
    * @return TestHelper.java 파일의 내용
    */
-  String getTestCode(List<TestCase> testCases, int timeLimit) throws IOException;
+  String getTestCode(List<TestCase> testCases, Double timeLimit) throws IOException;
 
-  String getMarkdownContent(int number, String title, String description, int timeLimit, int memoryLimit);
+  String getMarkdownContent(int number, String title, String description, Double timeLimit, int memoryLimit);
 
 }

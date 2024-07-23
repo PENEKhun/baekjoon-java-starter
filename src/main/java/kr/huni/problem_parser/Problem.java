@@ -15,12 +15,12 @@ public class Problem {
   private final String title;
   private final String description;
   private final String sourceRootDirectory;
-  private final int timeLimit;
+  private final Double timeLimit;
   private final int memoryLimit;
   private final List<TestCase> testCases;
 
   @Builder
-  public Problem(int number, String title, String description, Integer timeLimit, Integer memoryLimit, List<TestCase> testCases) {
+  public Problem(int number, String title, String description, Double timeLimit, Integer memoryLimit, List<TestCase> testCases) {
     UserConfiguration configuration = UserConfigurationLoader.getInstance();
 
     this.number = number;
@@ -28,7 +28,7 @@ public class Problem {
     this.sourceRootDirectory = configuration.srcDirPrefix.getValue() + number;
     this.description = description;
     this.testCases = testCases;
-    this.timeLimit = Objects.requireNonNullElse(timeLimit, 1);
+    this.timeLimit = Objects.requireNonNullElse(timeLimit, 1.0);
     this.memoryLimit = Objects.requireNonNullElse(memoryLimit, 512);
   }
 

@@ -37,7 +37,7 @@ public class BaekjoonProblemParser {
     String title = webParser.parse(PROBLEM_TITLE_SELECTOR, false)[0];
     String description = webParser.parse(PROBLEM_DESCRIPTION_SELECTOR, true)[0];
     String[] problemInformation = webParser.parse(PROBLEM_INFORMATION_SELECTOR, false)[0].split(" ");
-    Integer timeLimit = Integer.parseInt(problemInformation[0]);
+    Double timeLimit = Double.parseDouble(problemInformation[0]);
     Integer memoryLimit = Integer.parseInt(problemInformation[2]);
     final ArrayList<TestCase> testCases = new ArrayList<>();
 

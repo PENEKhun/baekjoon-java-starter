@@ -21,7 +21,7 @@ public class BojStarter {
   private final FileContentGenerator codeGenerator;
   private final BaekjoonProblemParser problemParser;
 
-  public void run(final int problemNumber) {
+  public void run(int problemNumber) {
     Problem problem = problemParser.parse(problemNumber);
     if (!problem.isExist()) {
       log.error("문제를 찾을 수 없습니다.");

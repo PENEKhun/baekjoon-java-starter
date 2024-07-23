@@ -26,7 +26,7 @@ public class JavaTemplate implements FileContentTemplate {
         .replace(REPLACED_TITLE, title);
   }
 
-  public String getTestCode(List<TestCase> testCases, int timeLimit) throws IOException {
+  public String getTestCode(List<TestCase> testCases, Double timeLimit) throws IOException {
     if (testCases.isEmpty()) {
       return SourceCodeFile.readFileFromResource(NO_TEST_JAVA_FILE);
     }
@@ -52,7 +52,7 @@ public class JavaTemplate implements FileContentTemplate {
   }
 
   @Override
-  public String getMarkdownContent(int number, String title, String description, int timeLimit, int memoryLimit) {
+  public String getMarkdownContent(int number, String title, String description, Double timeLimit, int memoryLimit) {
     String template = DEFAULT_MARKDOWN_TEMPLATE;
     UserConfigurationField markdownTemplate =
         UserConfigurationLoader.getInstance().markdownTemplate;
