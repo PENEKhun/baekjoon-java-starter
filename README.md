@@ -3,10 +3,22 @@
 해당 프로젝트는 자바를 이용하여 백준 문제를 풀때, 프로젝트 생성 및 테스트 케이스 자동 생성을 지원합니다.  
 **"여러분은 단지 문제 풀이에만 집중하면 됩니다."**
 
-![매번 귀찮게 프로젝트를 만들지 마세요](documentation/assets/1.png)
-![그냥 번호를 입력하세요](documentation/assets/2.png)
-![매번 귀찮게 복붙하지 마세요](documentation/assets/3.png)
-![그냥 실행만 하세요](documentation/assets/4.png)
+<div align="center">
+  <a>
+    <img src="documentation/assets/1.png" alt="매번 귀찮게 프로젝트를 만들지 마세요" width="500px"/> 
+  </a>
+  <a>
+    <img src="documentation/assets/2.png" alt="그냥 번호를 입력하세요" width="500px"/>
+  </a>
+</div>
+<div align="center">
+  <a>
+    <img src="documentation/assets/3.png" alt="매번 귀찮게 복붙하지 마세요" width="500px"/> 
+  </a>
+  <a>
+    <img src="documentation/assets/4.png" alt="그냥 실행만 하세요" width="500px"/>
+  </a>
+</div>
 
 ## 어떻게 쓰면 되나요?
 
