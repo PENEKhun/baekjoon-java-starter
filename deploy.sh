@@ -20,6 +20,15 @@ check_jq_installed() {
   fi
 }
 
+create_git_tag() {
+  git tag -a $VERSION -m "Release version $VERSION"
+  git push origin $VERSION
+  if [ $? -ne 0 ]; then
+    echo "Failed to create and push the tag."
+    exit 1
+  fi
+}
+
 get_latest_version() {
   GITHUB_API_URL="https://api.github.com/repos/$REPO/releases/latest"
   LATEST_VERSION=$(curl -s -H "Authorization: token $BOJ_STARTER_GIT_TOKEN" $GITHUB_API_URL | jq -r ".tag_name")
@@ -96,6 +105,7 @@ main() {
   check_jq_installed
   get_latest_version
   get_version
+  create_git_tag
   build_project
   find_jar_file
   create_release
