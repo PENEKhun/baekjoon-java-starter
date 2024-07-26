@@ -65,6 +65,14 @@ find_jar_file() {
 
 create_release() {
   GITHUB_API_URL="https://api.github.com/repos/$REPO/releases"
+
+  # VERSION에 PRERELEASE가 포함되면 prerelease로 설정
+  if [[ "$VERSION" =~ PRERELEASE ]]; then
+    PRERELEASE=true
+  else
+    PRERELEASE=false
+  fi
+
   RELEASE_RESPONSE=$(curl -s -X POST $GITHUB_API_URL \
   -H "Authorization: token $BOJ_STARTER_GIT_TOKEN" \
   -H "Content-Type: application/json" \
@@ -73,7 +81,7 @@ create_release() {
     "name": "'"$RELEASE_NAME $VERSION"'",
     "body": "'"$RELEASE_DESCRIPTION"'",
     "draft": false,
-    "prerelease": false
+    "prerelease": '"$PRERELEASE"'
   }')
   RELEASE_ID=$(echo "$RELEASE_RESPONSE" | jq -r '.id')
   if [ "$RELEASE_ID" == "null" ]; then
