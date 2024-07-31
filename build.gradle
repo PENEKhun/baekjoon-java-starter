@@ -64,6 +64,8 @@ jar {
 task generateSources {
     def outputDir = file("$buildDir/../src/main/java/version")
     outputs.dir outputDir
+    outputs.upToDateWhen { false }
+
     doFirst {
         if (!outputDir.exists()) {
             outputDir.mkdirs()
@@ -80,6 +82,7 @@ task generateSources {
             }
         }
         """
+
         new File(outputDir, "CurrentVersion.java").withWriter('UTF-8') { writer ->
             writer.write(versionClassContent)
         }
