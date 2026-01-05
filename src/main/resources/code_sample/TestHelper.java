@@ -82,7 +82,10 @@ public class TestHelper {
   private static Future<?> submitTask(ExecutorService executor) {
     return executor.submit(() -> {
       try {
-        Main.main(new String[0]);
+        Class<?> mainClass = findMainClass();
+        mainClass
+          .getMethod("main", String[].class)
+          .invoke(null, (Object) new String[0]);
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
@@ -130,7 +133,7 @@ public class TestHelper {
 
   private static void captureInitialState() {
     try {
-      Field[] fields = Main.class.getDeclaredFields();
+      Field[] fields = findMainClass().getDeclaredFields();
       for (Field field : fields) {
         if (Modifier.isStatic(field.getModifiers())) {
           field.setAccessible(true);
@@ -211,5 +214,18 @@ public class TestHelper {
         return ois.readObject();
       }
     }
+  }
+
+  private static Class<?> findMainClass() {
+    String[] candidates = { "Main", "MainKt" };
+
+    for (String className : candidates) {
+      try {
+        return Class.forName(className);
+      } catch (ClassNotFoundException ignored) {
+      }
+    }
+
+    throw new RuntimeException("Main 또는 MainKt 클래스를 찾을 수 없습니다.");
   }
 }
