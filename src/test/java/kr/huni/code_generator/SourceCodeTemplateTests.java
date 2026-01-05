@@ -27,6 +27,23 @@ class SourceCodeTemplateTests {
   }
 
   @Test
+  @DisplayName("생성되는 기본 Main.kt 기본 템플릿은 placeholder가 잘 치환된다.")
+  void kotlin_main_placeholder_fine() {
+    // given
+    KotlinTemplate sourceCodeTemplate = new KotlinTemplate();
+    int number = 1000;
+    String title = "A+B";
+
+    // when
+    String mainSourceCode = sourceCodeTemplate.getMainCode(number, title);
+
+    // then
+    Assertions.assertTrue(mainSourceCode.contains("BAEKJOON 1000번 A+B"));
+    Assertions.assertTrue(mainSourceCode.contains("https://www.acmicpc.net/problem/1000"));
+    Assertions.assertTrue(mainSourceCode.contains("fun main(args: Array<String>)"));
+  }
+
+  @Test
   @DisplayName("테스트케이스가 있을때 생성된 TestHelper.java는 문법적으로 오류가 없다.")
   void test_syntax_fine() throws IOException {
     // given

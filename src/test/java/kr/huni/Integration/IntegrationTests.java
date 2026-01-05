@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import kr.huni.code_generator.KotlinCodeGenerator;
+import kr.huni.file_generator.KotlinSourceCodeFile;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +22,7 @@ import kr.huni.code.runner.FakeCodeOpen;
 import kr.huni.code_generator.JavaCodeGenerator;
 import kr.huni.file_generator.JavaSourceCodeFile;
 import kr.huni.problem_parser.BaekjoonProblemParser;
-import kr.huni.problem_parser.JsoupWebParser;
+import kr.huni.problem_parser.WebParserStub;
 
 @DisplayName("Large Integration Test")
 class IntegrationTests {
@@ -60,7 +62,7 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser()));
+        new BaekjoonProblemParser(new WebParserStub()));
     String path = "p1000/src/Main.java";
     program.run(1_000);
 
@@ -79,7 +81,7 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser()));
+        new BaekjoonProblemParser(new WebParserStub()));
 
     // when
     program.run(1_000);
@@ -96,7 +98,7 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser()));
+        new BaekjoonProblemParser(new WebParserStub()));
 
     // when
     program.run(1_000);
@@ -113,7 +115,7 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser()));
+        new BaekjoonProblemParser(new WebParserStub()));
     program.run(1_000);
 
     String testCode = Files.readString(Path.of("p1000/src/TestHelper.java"));
@@ -145,7 +147,7 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser()));
+        new BaekjoonProblemParser(new WebParserStub()));
     program.run(1_000);
 
     String testCode = Files.readString(Path.of("p1000/src/TestHelper.java"));
@@ -169,7 +171,7 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser()));
+        new BaekjoonProblemParser(new WebParserStub()));
     program.run(2_438);
 
     String testCode = Files.readString(Path.of("p2438/src/TestHelper.java"));
@@ -200,7 +202,7 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser()));
+        new BaekjoonProblemParser(new WebParserStub()));
     program.run(1000);
 
     String testCode = Files.readString(Path.of("p1000/src/TestHelper.java"));
@@ -237,7 +239,7 @@ class IntegrationTests {
         new FakeCodeOpen(),
         new JavaSourceCodeFile(),
         new JavaCodeGenerator(),
-        new BaekjoonProblemParser(new JsoupWebParser()));
+        new BaekjoonProblemParser(new WebParserStub()));
     program.run(15_686);
 
     // when
@@ -331,5 +333,26 @@ class IntegrationTests {
         ===============
         테스트 완료 (4 / 4)
         주어진 케이스에 대해 잘 동작하고 있습니다."""));
+  }
+
+  @Test
+  @DisplayName("Kotlin 프로젝트 생성이 잘 동작한다.")
+  void kotlinIntegrationTest() throws IOException {
+    // given
+    BojStarter program = new BojStarter(
+        new FakeCodeOpen(),
+        new KotlinSourceCodeFile(),
+        new KotlinCodeGenerator(),
+        new BaekjoonProblemParser(new WebParserStub()));
+
+    // when
+    program.run(1000);
+
+    // then
+    assertTrue(new File("p1000/src/Main.kt").exists());
+    assertTrue(new File("p1000/src/TestHelper.java").exists());
+
+    String mainCode = Files.readString(Path.of("p1000/src/Main.kt"));
+    assertTrue(mainCode.contains("fun main(args: Array<String>)"));
   }
 }

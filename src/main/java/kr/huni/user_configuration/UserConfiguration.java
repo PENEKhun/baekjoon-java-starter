@@ -20,7 +20,7 @@ public class UserConfiguration {
   public final UserConfigurationField mainCodeTemplate =
       UserConfigurationField.builder()
           .description("""
-              Main.java 파일의 템플릿입니다. 예악어 {{number}}와 {{title}}을 사용하면 문제번호와 문제제목으로 자동 치환됩니다.
+              Main.java 또는 Main.kt 파일의 템플릿입니다. 예악어 {{number}}와 {{title}}을 사용하면 문제번호와 문제제목으로 자동 치환됩니다.
               """)
           .defaultValue(JavaTemplate.DEFAULT_MAIN_CODE_TEMPLATE)
           .build();
