@@ -2,9 +2,13 @@ package kr.huni;
 
 import java.io.IOException;
 import java.util.Scanner;
+import kr.huni.code_generator.FileContentGenerator;
 import kr.huni.code_generator.JavaCodeGenerator;
+import kr.huni.code_generator.KotlinCodeGenerator;
 import kr.huni.code_runner.IdeaCodeOpenManager;
 import kr.huni.file_generator.JavaSourceCodeFile;
+import kr.huni.file_generator.KotlinSourceCodeFile;
+import kr.huni.file_generator.SourceCodeFile;
 import kr.huni.problem_parser.BaekjoonProblemParser;
 import kr.huni.problem_parser.JsoupWebParser;
 import kr.huni.user_configuration.UserConfigurationLoader;
@@ -40,11 +44,16 @@ public class Main {
     Scanner scanner = new Scanner(System.in);
     log.info("백준 문제 번호를 입력해 주세요: ");
     int problemNumber = scanner.nextInt();
+    log.info("언어를 선택해 주세요 (1: Java, 2: Kotlin): ");
+    int languageChoice = scanner.nextInt();
+
+    SourceCodeFile fileUtil = (languageChoice == 2) ? new KotlinSourceCodeFile() : new JavaSourceCodeFile();
+    FileContentGenerator codeGenerator = (languageChoice == 2) ? new KotlinCodeGenerator() : new JavaCodeGenerator();
 
     BojStarter bojStarter = new BojStarter(
         new IdeaCodeOpenManager(),
-        new JavaSourceCodeFile(),
-        new JavaCodeGenerator(),
+        fileUtil,
+        codeGenerator,
         new BaekjoonProblemParser(new JsoupWebParser())
     );
     bojStarter.run(problemNumber);

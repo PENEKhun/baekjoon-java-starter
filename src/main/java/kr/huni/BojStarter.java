@@ -4,7 +4,7 @@ import java.io.IOException;
 import kr.huni.code_generator.FileContentGenerator;
 import kr.huni.code_generator.GeneratedCode;
 import kr.huni.code_runner.CodeOpenManager;
-import kr.huni.file_generator.JavaSourceCodeFile;
+import kr.huni.file_generator.SourceCodeFile;
 import kr.huni.os.OperatingSystem;
 import kr.huni.problem_parser.BaekjoonProblemParser;
 import kr.huni.problem_parser.Problem;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BojStarter {
 
   private final CodeOpenManager codeOpenManager;
-  private final JavaSourceCodeFile fileUtil;
+  private final SourceCodeFile fileUtil;
   private final FileContentGenerator codeGenerator;
   private final BaekjoonProblemParser problemParser;
 
