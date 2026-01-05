@@ -46,18 +46,33 @@ public class Main {
     int problemNumber = scanner.nextInt();
     log.info("언어를 선택해 주세요 (1: Java, 2: Kotlin): ");
     int languageChoice = scanner.nextInt();
+    BojStarter bojStarter = starterForLanguage(languageChoice, new int[]{1, 2});
+
+    bojStarter.run(problemNumber);
+    scanner.close();
+  }
+
+  private static BojStarter starterForLanguage(int languageChoice, int[] availableLanguages) {
+    boolean isValidChoice = false;
+    for (int lang : availableLanguages) {
+        if (languageChoice == lang) {
+            isValidChoice = true;
+            break;
+        }
+    }
+    if (!isValidChoice) {
+        throw new IllegalArgumentException("지원하지 않는 언어 선택입니다. 선택한 번호: " + languageChoice);
+    }
 
     SourceCodeFile fileUtil = (languageChoice == 2) ? new KotlinSourceCodeFile() : new JavaSourceCodeFile();
     FileContentGenerator codeGenerator = (languageChoice == 2) ? new KotlinCodeGenerator() : new JavaCodeGenerator();
 
-    BojStarter bojStarter = new BojStarter(
-        new IdeaCodeOpenManager(),
-        fileUtil,
-        codeGenerator,
-        new BaekjoonProblemParser(new JsoupWebParser())
-    );
-    bojStarter.run(problemNumber);
-    scanner.close();
+      return new BojStarter(
+          new IdeaCodeOpenManager(),
+          fileUtil,
+          codeGenerator,
+          new BaekjoonProblemParser(new JsoupWebParser())
+      );
   }
 
 }
